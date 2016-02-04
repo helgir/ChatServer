@@ -1,0 +1,22 @@
+{
+  "name": "chatserver",
+  "description": "WEPO Chat client assignment",
+  "main": "index.html",
+  "authors": [
+    "helgir <helgir87@gmail.com>"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "angular"
+  ],
+  "homepage": "https://github.com/helgir/ChatServer",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

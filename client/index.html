@@ -1,12 +1,19 @@
-<<!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html ng-app="ChatApp">
 <head>
-	<title>
-	</title>
+	<meta charset="utf-8">
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Angular Chat</title>
 </head>
 <body>
-<script type="text/javascript" src ="bower_components/angular/angular.js"></script>
-<script type="text/javascript" src ="chatserver.js"></script>
+<div ng-view></div>
+	
+	<script src="bower_components/angular/angular.min.js"></script>
+	<script src="bower_components/angular-route/angular-route.min.js"></script>
+	<script src="http://localhost:8080/socket.io/socket.io.js"></script>
+	<script src="js/main.js"></script>
 
 </body>
 </html>

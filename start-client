@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd client
+Python2.7 -m SimpleHTTPServer 8000

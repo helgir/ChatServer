@@ -13,10 +13,10 @@ var users = {};
 
 //Default room.
 rooms.lobby = new Room();
-rooms.lobby.setTopic("Welcome to the lobby!");
+rooms.lobby.setTopic("Lobby1");
 //Test rooms.
 rooms.lobby2 = new Room();
-rooms.lobby2.setTopic("HI ASK");
+rooms.lobby2.setTopic("Lobby2");
 
 //Second room.
 

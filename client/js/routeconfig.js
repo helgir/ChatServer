@@ -5,9 +5,9 @@ angular.module("ChatApp").config(function($routeProvider){
 	}).when("/rooms/:nickId",{
 		templateUrl: "/views/rooms.html",
 		controller: "RoomsCtrl",
-	}).when("/rooms/:nickId/:lobbyId",{
-		templateUrl: "/views/lobby.html",
-		controller: "LobbyCtrl"
+	}).when("/rooms/:nickId/:roomId",{
+		templateUrl: "/views/room.html",
+		controller: "RoomCtrl"
 	}).otherwise({ redirectTo: "home/login"});
 
 });

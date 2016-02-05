@@ -2,14 +2,14 @@
 
 
 
-<p> Create Lobby</p>
-<input type="text" ng-model="lobbyId" placeholder="Enter lobby name"></input>
-<button class="btn btn-default" ng-click="newRoom()">Create Lobby</button>
+<p> Create Room</p>
+<input type="text" ng-model="roomId" placeholder="Enter Room name"></input>
+<button class="btn btn-default" ng-click="newRoom()">Create Room</button>
 
 
 
 <ul class="list-group">
 	<li class="list-group-item" ng-repeat="room in rooms">
-		<a ng-href="#/rooms/{{nickId}}/{{room.topic}}"> {{room.topic}} </a>
+		<a ng-href="#/rooms/{{nickId}}/{{room}}"> {{room}} </a>
 	</li>
 </ul

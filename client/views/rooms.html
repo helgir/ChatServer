@@ -1,7 +1,7 @@
 <h2> Welcome {{nickId}}, please choose chat room <h2>
 
-<ul>
-	<li ng-repeat="room in rooms">
+<ul class="list-group">
+	<li class="list-group-item" ng-repeat="room in rooms">
 		<a ng-href="#/rooms/{{nickId}}/{{room.topic}}"> {{room.topic}} </a>
 	</li>
-</ul>
+</ul

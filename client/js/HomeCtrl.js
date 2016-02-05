@@ -5,16 +5,19 @@ angular.module("ChatApp").controller("HomeCtrl",
 		
 		$scope.nickId = '';
 		$scope.loggedIn = false;
+		$scope.placeHolder = 'Enter Nickname';
+		
 		
 			$scope.login = function(){
-				//if(#scope.nickId === '') {
-					//TODO Set error? cannot be empty
-				//}
+				
 				socket.emit("adduser", $scope.nickId, function(available){
-			    if (available){
+			   if (available){
 			    	$scope.loggedIn = true;
 			    	$location.path('/rooms/' + $scope.nickId);
 			    	
+			    }
+			    else {
+			    	$scope.loggedIn = false;
 			    }
 			    
 			    

@@ -14,6 +14,11 @@ var users = {};
 //Default room.
 rooms.lobby = new Room();
 rooms.lobby.setTopic("Welcome to the lobby!");
+//Test rooms.
+rooms.lobby2 = new Room();
+rooms.lobby2.setTopic("HI ASK");
+
+//Second room.
 
 io.sockets.on('connection', function (socket) {
 

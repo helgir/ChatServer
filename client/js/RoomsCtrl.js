@@ -19,8 +19,6 @@ angular.module("ChatApp").controller("RoomsCtrl",
 			});
 		};
 		
-		
-
 		socket.on("roomlist", function(data) {
 			var rnames = Object.keys(data);
 			$scope.rooms = rnames;

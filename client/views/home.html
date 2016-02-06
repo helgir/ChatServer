@@ -1,6 +1,17 @@
-<h2> Welcome to chat! <h2>
+<div class="container_home">
 
-<div ng-hide="loggedIn" id="login"> 
-<input type="text" ng-model="nickId" placeholder="Enter Nickname"></input>
-<button ng-click="login()" class="btn btn-default">Login</button>
+	<div class="top_home"> <h2 class="headings"> Welcome To Angular Chat </h2></div>
+		<div class="middle_home">
+			<div class="alert alert-danger" ng-cloak ng-show="errorMessage != ''">
+								{{errorMessage}}
+			</div>
+
+			<div ng-hide="loggedIn" class="login"> 
+				<input type="text" ng-model="nickId" placeholder="Enter Nickname"></input>
+				<button ng-click="login()" class="btn btn-default">Login</button>
+			</div>
+		</div>
+	
+
+
 </div>

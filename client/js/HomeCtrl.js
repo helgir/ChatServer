@@ -7,24 +7,33 @@ angular.module("ChatApp").controller("HomeCtrl",
 		$scope.loggedIn = false;
 		$scope.placeHolder = 'Enter Nickname';
 		$scope.errorMessage = '';
-		
-
+		$scope.login_error = false;
+			
 		
 			$scope.login = function(){
 
-				
 				socket.emit("adduser", $scope.nickId, function(available){
 				
-			   if (available){
+				if($scope.nickId === '') {
+					$scope.loggedIn = false;
+					$scope.login_error = true;
+					$scope.errorMessage = 'Please enter nickname';
+
+				}
+			   else if (available){
 			    	$scope.loggedIn = true;
 			    	$location.path('/rooms/' + $scope.nickId);
 			    	
 			    }
 			    else {
 			    	$scope.loggedIn = false;
+			    	$scope.login_error = true;
 			    	$scope.errorMessage = 'This nickname is unavailable';
+
+
+
 			    }
-			    
+			   
 			    
 		});
 			};

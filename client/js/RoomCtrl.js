@@ -7,6 +7,8 @@ angular.module("ChatApp").controller("RoomCtrl",
 		$scope.roomId = $routeParams.roomId;
 		$scope.nickId = $routeParams.nickId;
 		$scope.nicks = [];
+		$scope.submitMessage = '';
+		$scope.messages = [];
 
 
 		socket.emit('joinroom', { room: $scope.roomId }, function (success, reason) {
@@ -22,28 +24,37 @@ angular.module("ChatApp").controller("RoomCtrl",
 	});
 
 			
-
 				socket.on('updateusers', function (roomId, nicksId, ops) {
 
 					
 					if($scope.roomId === roomId) {
 
 						$scope.nicks = nicksId;
-						var count = 0;
-						for (var k in nicksId) {
-    				if (nicksId.hasOwnProperty(k)) {
-      					++count;
-    					}
-					}
-						console.log(count);
-
-				
-						
 					}
 				});
 
+
+				$scope.sendMSG = function() {
+					if($scope.submitMessage === '') {
+						//skip empty text
+					}
+					else {
+						socket.emit('sendmsg', { roomName: $scope.roomId, msg: $scope.submitMessage });
+					}
+					
+
+					$scope.submitMessage = '';
+				};
 			
 
+
+	socket.on('updatechat', function (roomName, msgHistory) {
+		if(roomName === $scope.roomId) {
+			$scope.messages = msgHistory;
+
+			
+		}
+	});
 
 
 

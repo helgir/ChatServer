@@ -29,9 +29,6 @@ angular.module("ChatApp").controller("HomeCtrl",
 			    	$scope.loggedIn = false;
 			    	$scope.login_error = true;
 			    	$scope.errorMessage = 'This nickname is unavailable';
-			    	
-
-
 
 			    }
 			   

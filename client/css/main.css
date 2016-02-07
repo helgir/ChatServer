@@ -89,19 +89,43 @@ h4 {
     float: left;
     height: 75px;
     width: 1000px;
-    background: #FF6633;
+   
 }
 
 #content {
+border: 5px solid black;
     float: left;
     background: #FFFFFF;
-    width: 800px;
+    width: 500px;
+    height: 500px;
+    max-height: 500px;
+    overflow-x: hidden;
 }
 
 #rightcolumn {
     background: #CC33FF;
     width: 200px;
     float: left;
+}
+
+.well {
+ 
+}
+
+.messageBox {
+  position: absolute; 
+  bottom: 35%;
+  color:black;
+  border: 5px solid black;
+  background: #FFFFFF;
+  width: 500px;
+  height:45px;
+}
+
+.submitBox {
+  width: 75%;
+    background: #FFFFFF;
+
 }
 
 

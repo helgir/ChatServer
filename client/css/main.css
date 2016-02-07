@@ -15,9 +15,15 @@ body {
 .row {
 
  position: relative;
- left: 25%;
- top: 300px;
+ left: 10%;
+ top: 240px;
 
+}
+
+.row_2 {
+   position: relative;
+ left: 10%;
+ top: 0px;
 }
 .form-login {
     background-color: #EDEDED;

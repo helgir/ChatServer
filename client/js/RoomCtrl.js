@@ -10,7 +10,10 @@ angular.module("ChatApp").controller("RoomCtrl",
 
 
 		socket.emit('joinroom', { room: $scope.roomId }, function (success, reason) {
+
 		if (success) {
+			//TODO
+
 
 			//Checks if it was succsessful
 			// Could be password protected...
@@ -26,6 +29,14 @@ angular.module("ChatApp").controller("RoomCtrl",
 					if($scope.roomId === roomId) {
 
 						$scope.nicks = nicksId;
+						var count = 0;
+						for (var k in nicksId) {
+    				if (nicksId.hasOwnProperty(k)) {
+      					++count;
+    					}
+					}
+						console.log(count);
+
 				
 						
 					}

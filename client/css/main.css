@@ -15,7 +15,7 @@ body {
 .row {
 
  position: relative;
- left: 20%;
+ left: 25%;
  top: 300px;
 
 }
@@ -40,46 +40,61 @@ h4 {
 
 .form-control {
     border-radius: 10px;
+
 }
 
 .wrapper {
     text-align: center;
 }
 
-.rooms_left {
-    margin: 0px;
-    display: inline-block;
-    width: 14%;
-    text-align: left;
-    vertical-align: right;
-   
-}
+.list-group-item {
+  width: 37%;
+  left: 60%;
 
-.rooms_mid {
-   margin: 0px;
-    display: inline-block;
-    width: 70%;
-    text-align: center;
-    vertical-align: middle;
-}
-
-.rooms_right {
-    margin: 0px;
-    display: inline-block;
-    width: 14%;
-    text-align: center;
-    vertical-align: top;
-   
 
 }
 
 .list-group {
 
-    
-    width: 20%;
-    margin-left: 37%;
-    margin-top: 2%;
+}
 
+#scroll-list {
+
+    height: auto;
+    max-height: 400px;
+    overflow-x: hidden;
+}
+
+
+#errorMessage_rooms{
+  position: absolute;
+  width: 20%;
+  bottom: 65%;
+  left: 50%;
+}
+
+#wrapper_room {
+    margin: 0 auto;
+    width: 1000px;
+}
+
+#header {
+    float: left;
+    height: 75px;
+    width: 1000px;
+    background: #FF6633;
+}
+
+#content {
+    float: left;
+    background: #FFFFFF;
+    width: 800px;
+}
+
+#rightcolumn {
+    background: #CC33FF;
+    width: 200px;
+    float: left;
 }
 
 

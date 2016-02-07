@@ -103,9 +103,10 @@ border: 5px solid black;
 }
 
 #rightcolumn {
-    background: #CC33FF;
-    width: 200px;
+    background: #FFFFFF;
+    width: 150px;
     float: left;
+    text-align: center;
 }
 
 .well {
@@ -113,8 +114,8 @@ border: 5px solid black;
 }
 
 .messageBox {
-  position: absolute; 
-  bottom: 35%;
+  position: fixed; 
+  bottom: 15%;
   color:black;
   border: 5px solid black;
   background: #FFFFFF;
@@ -123,6 +124,7 @@ border: 5px solid black;
 }
 
 .submitBox {
+
   width: 75%;
     background: #FFFFFF;
 

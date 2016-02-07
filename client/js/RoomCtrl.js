@@ -44,6 +44,8 @@ angular.module("ChatApp").controller("RoomCtrl",
 					
 
 					$scope.submitMessage = '';
+					var scrollToBottom = $('#content');
+						scrollToBottom.animate({ scrollTop: scrollToBottom.prop('scrollHeight') }, 1000);
 				};
 			
 

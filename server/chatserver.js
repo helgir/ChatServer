@@ -12,8 +12,8 @@ var rooms = {};
 var users = {};
 
 //Default room.
-//rooms.lobby = new Room();
-//rooms.lobby.setTopic("Lobby1");
+rooms.lobby = new Room();
+rooms.lobby.setTopic("Lobby1");
 
 
 io.sockets.on('connection', function (socket) {

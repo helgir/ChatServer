@@ -1,23 +1,34 @@
+
+
+
 <div class="container">
-<h2 class="headings"> Welcome {{nickId}}, please choose/create chat room </h2>
-    <div class="row_2" style="padding-top:50px">
-         
- 				 <div class="alert alert-danger" ng-show="create_error" id="errorMessage_rooms" >
+    <div class="row">
+        <div class="col-md-offset-5 col-md-3">
+            <div class="form-login">
+            <h4>Hello {{nickId}}</h4>
+            <input  type="text" ng-model="roomId" placeholder="Enter Room name"></input>
+            </br>
+           	
+            </br>
+            <div class="wrapper" ng-hide="loggedIn">
+            <span class="group-btn">     
+                 <button class="btn btn-default" ng-click="newRoom()">Create Room</button>
+                </br>
+
+                </br>
+                <div class="alert alert-danger" ng-show="create_error" id="errorMessage_rooms" >
 								{{errorMessage}}
 				</div>
-                <input  type="text" ng-model="roomId" placeholder="Enter Room name"></input>
+				
+            </span>
 
-            <button class="btn btn-default" ng-click="newRoom()">Create Room</button>
-
+            </div>
+            </div>
+        	
+				
+        </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 text-center" id="scroll-list">
-
-            <div class="list-group-list list-group-horizontal"  ng-repeat="room in rooms">
+				 <div class="list-group-list list-group-horizontal"  ng-repeat="room in rooms">
                <a ng-href="#/rooms/{{nickId}}/{{room}}" class="list-group-item "><span class="glyphicon glyphicon-modal-window"></span> {{room}} </a>
             </div>
-
-
-        
-        </div>
-       
     </div>
-</div>

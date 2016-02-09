@@ -1,26 +1,32 @@
 
  <div id="wrapper_room">
         <div id="header">
-         <h2 class="headings"> Hello {{nickId}} welcome to chat room: {{roomId}} </h2>
-        </div>
+	        <button ng-click="partRoom()"> Part Room </button>
+	         <h2 class="headings"> Hello {{nickId}} welcome to chat room: {{roomId}} </h2>
+        </div> 
         <div id="content" class="well">
-        <ul ng-repeat="message in messages">
-          <li>
-          <span >{{message.nick}}: {{message.message}} </span> 
-          </li>
-        </ul>
+	        <ul ng-repeat="message in messages">
+	          <li>
+	          <span >{{message.timestamp}} {{message.nick}}: {{message.message}} </span> 
+	          </li>
+	        </ul>
+
        </div>
-        <div id="rightcolumn">
-       	<div> Users </div>
+      <div id="rightcolumn">
+       	<h2> Users </h2>
            <ul class="list-group-list list-group-horizontal">
 				<li class="list-unstyled" ng-repeat="nick in nicks">  {{nick}}
 				</li>
 			</ul>
         </div>
+
+
      <div class="messageBox">
      <form ng-submit="sendMSG()">
       <button  type="submit"class="btn btn-default" ng-click="sendMSG()">Submit</button> 
-      <input  class="submitBox" type="text" ng-model="submitMessage" placeholder=""></input> 
+      <input  class="submitBox " type="text" ng-model="submitMessage" placeholder=""></input> 
       </form>
+
      </div>
-    </div>
+
+</div>

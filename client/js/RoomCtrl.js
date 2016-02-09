@@ -1,8 +1,8 @@
 angular.module("ChatApp").controller("RoomCtrl", 
-["$scope", "$http", "$routeParams", "socket", "$rootScope",
+["$scope", "$http", "$routeParams", "$location", "socket", "$rootScope", 
 
 	
-	function($scope, $http, $routeParams, socket, $rootScope){
+	function($scope, $http, $routeParams, $location, socket, $rootScope) {
 
 		$scope.roomId = $routeParams.roomId;
 		$scope.nickId = $routeParams.nickId;
@@ -15,7 +15,6 @@ angular.module("ChatApp").controller("RoomCtrl",
 
 		if (success) {
 			//TODO
-
 
 			//Checks if it was succsessful
 			// Could be password protected...
@@ -50,13 +49,26 @@ angular.module("ChatApp").controller("RoomCtrl",
 			
 
 
-	socket.on('updatechat', function (roomName, msgHistory) {
-		if(roomName === $scope.roomId) {
+	socket.on('updatechat', function (roomId, msgHistory) {
+		if(roomId === $scope.roomId) {
 			$scope.messages = msgHistory;
+
+
+			console.log(msgHistory.timestamp);
 
 			
 		}
 	});
+
+	//socket.on('partroom', function (room)
+
+	$scope.partRoom = function() {
+
+		socket.emit('partroom', $scope.roomId);
+
+			$location.path('/rooms/' + $scope.nickId);
+
+	};
 
 
 

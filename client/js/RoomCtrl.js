@@ -49,18 +49,8 @@ angular.module("ChatApp").controller("RoomCtrl",
 			
 
 
-	socket.on('updatechat', function (roomId, msgHistory) {
-		if(roomId === $scope.roomId) {
-			$scope.messages = msgHistory;
 
 
-			console.log(msgHistory.timestamp);
-
-			
-		}
-	});
-
-	//socket.on('partroom', function (room)
 
 	$scope.partRoom = function() {
 
@@ -69,6 +59,16 @@ angular.module("ChatApp").controller("RoomCtrl",
 			$location.path('/rooms/' + $scope.nickId);
 
 	};
+
+	socket.on('updatechat', function (roomId, msgHistory) {
+		if(roomId === $scope.roomId) {
+			$scope.messages = msgHistory;
+					console.log($scope.messages);
+
+			
+		}
+	});
+
 
 
 

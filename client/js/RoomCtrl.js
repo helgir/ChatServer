@@ -9,6 +9,7 @@ angular.module("ChatApp").controller("RoomCtrl",
 		$scope.nicks = [];
 		$scope.submitMessage = '';
 		$scope.messages = [];
+		$scope.topic = '';
 
 
 		socket.emit('joinroom', { room: $scope.roomId }, function (success, reason) {
@@ -69,6 +70,13 @@ angular.module("ChatApp").controller("RoomCtrl",
 		}
 	});
 
+	socket.on('updatetopic', function (roomId, topic) {
+		if(roomId == $scope.roomId) {
+			$scope.topic = topic;
+
+		}
+
+	});
 
 
 

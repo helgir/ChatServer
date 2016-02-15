@@ -3,7 +3,7 @@
         <div id="header">
 	        <button ng-click="partRoom()"> Part Room </button>
 	         <h2 class="headings"> Hello {{nickId}} welcome to chat room: {{roomId}} </h2>
-           <h2>The topic of the room is: {{topic}}</h2>
+           <h2 class="headings">Topic of the room is: {{topic}}</h2>
         </div> 
         <div id="content" class="well">
 	        <ul ng-repeat="message in messages">
@@ -12,14 +12,22 @@
 	          </li>
 	        </ul>
 
+         
+
        </div>
+
       <div id="rightcolumn">
        	<h2> Users </h2>
-           <ul class="list-group-list list-group-horizontal">
-				<li class="list-unstyled" ng-repeat="nick in nicks">  {{nick}}
+           <ul class="list-group-list list-group-horizontal" id="users">
+				<li class="userlist-unstyled" ng-repeat="nick in nicks">
+         <a href="" ng-click="showPmBox(nick)"> {{nick}} </a>
 				</li>
 			</ul>
         </div>
+
+          <div class="pmBox" ng-show="userSelected">
+          PM BOX
+          </div>
 
 
      <div class="messageBox">

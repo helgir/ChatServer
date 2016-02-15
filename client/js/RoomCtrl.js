@@ -10,6 +10,8 @@ angular.module("ChatApp").controller("RoomCtrl",
 		$scope.submitMessage = '';
 		$scope.messages = [];
 		$scope.topic = '';
+		$scope.userSelected = false;
+		$scope.nickSelected = '';
 
 
 		socket.emit('joinroom', { room: $scope.roomId }, function (success, reason) {
@@ -64,19 +66,35 @@ angular.module("ChatApp").controller("RoomCtrl",
 	socket.on('updatechat', function (roomId, msgHistory) {
 		if(roomId === $scope.roomId) {
 			$scope.messages = msgHistory;
-					console.log($scope.messages);
-
 			
 		}
 	});
 
 	socket.on('updatetopic', function (roomId, topic) {
-		if(roomId == $scope.roomId) {
+		if(roomId === $scope.roomId) {
 			$scope.topic = topic;
 
 		}
 
 	});
+
+		$scope.showPmBox = function (nick) {
+
+			if($scope.nickSelected != nick) {
+				$scope.nickSelected = nick;
+				$scope.userSelected = true;
+			}
+
+			else {
+
+				$scope.userSelected = false;
+				$scope.nickSelected = '';
+			}
+
+		
+		};
+       	
+
 
 
 

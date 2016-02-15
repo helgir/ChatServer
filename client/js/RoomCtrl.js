@@ -12,6 +12,8 @@ angular.module("ChatApp").controller("RoomCtrl",
 		$scope.topic = '';
 		$scope.userSelected = false;
 		$scope.nickSelected = '';
+		$scope.pmMessages = [];
+		$scope.pmSubmitMessage = '';
 
 
 		socket.emit('joinroom', { room: $scope.roomId }, function (success, reason) {
@@ -48,6 +50,19 @@ angular.module("ChatApp").controller("RoomCtrl",
 					$scope.submitMessage = '';
 					var scrollToBottom = $('#content');
 						scrollToBottom.animate({ scrollTop: scrollToBottom.prop('scrollHeight') }, 1000);
+				};
+
+				$scope.sendPmMSG = function () {
+
+					if($scope.pmSubmitMessage === '') {
+						//skip empty text
+					}
+					else {
+					}
+					
+
+					
+
 				};
 			
 

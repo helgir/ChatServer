@@ -59,7 +59,7 @@ angular.module("ChatApp").controller("RoomCtrl",
 			
 
 
-        };
+        });
 
         $scope.partRoom = function() {
 
@@ -78,4 +78,7 @@ angular.module("ChatApp").controller("RoomCtrl",
 
 		
 		};
+
+	};
+
        	

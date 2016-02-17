@@ -14,17 +14,17 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         $scope.pmMessages = [];
         $scope.pmSubmitMessage = '';
 
-
         socket.emit('joinroom', {
             room: $scope.roomId
-        }, function(success, reason) {
+        }, function(success, isop, reason) {
 
             if (success) {
-                console.log(JSON.stringify(reason));
-
-            }
+				$scope.isop = isop;
+            } else {
+				console.log(reason);
+			}
+			
         });
-
 
         socket.on('updateusers', function(roomId, nicksId, ops) {
 
@@ -60,15 +60,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 //skip empty text
             } else {}
 
-
-
-
         };
-
-
-
-
-
 
         $scope.partRoom = function() {
 
@@ -104,13 +96,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 $scope.nickSelected = '';
             }
 
-
         };
-
-
-
-
-
 
     }
 ]);

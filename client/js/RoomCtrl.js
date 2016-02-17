@@ -20,19 +20,17 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         }, function(success, isop, reason) {
 
             if (success) {
-				$scope.isop = isop;
 
+                console.log("Joined room");
             } else {
-				console.log(reason);
-			}
-			
+                console.log(reason);
+            }
+
         });
 
         socket.on('updateusers', function(roomId, nicksId, ops) {
-
-
+            $scope.isop = (ops[$scope.nickId] !== undefined);
             if ($scope.roomId === roomId) {
-
                 $scope.nicks = nicksId;
             }
         });
@@ -75,16 +73,13 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         socket.on('updatechat', function(roomId, msgHistory) {
             if (roomId === $scope.roomId) {
                 $scope.messages = msgHistory;
-
             }
         });
 
         socket.on('updatetopic', function(roomId, topic) {
             if (roomId === $scope.roomId) {
                 $scope.topic = topic;
-
             }
-
         });
 
         

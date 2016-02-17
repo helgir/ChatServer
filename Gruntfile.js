@@ -2,7 +2,12 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         jshint: {
-            files: ['**/*.js', '!node_modules/**/*', '!client/bower_component/**/*', "!server/node_modules/**/*"],
+            files: [
+				'**/*.js',
+                '!node_modules/**/*.js',
+                '!client/bower_components/**/*.js',
+                '!server/node_modules/**/*.js'
+			],
             options: {
                 curly: true,
                 immed: true,
@@ -26,7 +31,7 @@ module.exports = function(grunt) {
             tasks: ['jshint']
         },
         jsbeautifier: {
-            files: ['**/*.js', '!node_modules/**/*', '!client/bower_component/**/*', "!server/node_modules/**/*"],
+            files: ['**.js', '!node_modules/**', '!client/bower_component/**', "!server/node_modules/**"],
             options: {
                 preserveNewlines: false
             }

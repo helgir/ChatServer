@@ -15,27 +15,19 @@ angular.module("ChatApp").controller("RoomCtrl",
 		$scope.pmMessages = [];
 		$scope.pmSubmitMessage = '';
 
+        socket.emit('joinroom', {
+            room: $scope.roomId
+        }, function(success, isop, reason) {
 
-		socket.emit('joinroom', { room: $scope.roomId }, function (success, reason) {
-
-		if (success) {
-			//TODO
-
-			//Checks if it was succsessful
-			// Could be password protected...
+            if (success) {
+				$scope.isop = isop;
+            } else {
+				console.log(reason);
+			}
 			
-		}
-	});
+        });
 
-			
-				socket.on('updateusers', function (roomId, nicksId, ops) {
-
-					
-					if($scope.roomId === roomId) {
-
-						$scope.nicks = nicksId;
-					}
-				});
+        socket.on('updateusers', function(roomId, nicksId, ops) {
 
 
 				$scope.sendMSG = function() {
@@ -67,31 +59,9 @@ angular.module("ChatApp").controller("RoomCtrl",
 			
 
 
+        };
 
-
-
-	$scope.partRoom = function() {
-
-		socket.emit('partroom', $scope.roomId);
-
-			$location.path('/rooms/' + $scope.nickId);
-
-	};
-
-	socket.on('updatechat', function (roomId, msgHistory) {
-		if(roomId === $scope.roomId) {
-			$scope.messages = msgHistory;
-			
-		}
-	});
-
-	socket.on('updatetopic', function (roomId, topic) {
-		if(roomId === $scope.roomId) {
-			$scope.topic = topic;
-
-		}
-
-	});
+        $scope.partRoom = function() {
 
 		$scope.showPmBox = function (nick) {
 
@@ -109,9 +79,3 @@ angular.module("ChatApp").controller("RoomCtrl",
 		
 		};
        	
-
-
-
-
-	
-}]);

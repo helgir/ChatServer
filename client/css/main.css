@@ -118,6 +118,7 @@ h4 {
     max-height: 500px;
     overflow-x: hidden;
     background: white;
+
  
 }
 
@@ -139,8 +140,8 @@ h4 {
 }
 
 .pmBoxTop {
-   word-wrap: break-word;
-    overflow-wrap: break-word;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
   height: 340px;
 
 }
@@ -227,6 +228,11 @@ width: 300px;
   left:15%;
   max-height: 400px;
 }
+.opSelect {
+
+  width: 10%;
+}
+
 
 
 

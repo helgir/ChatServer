@@ -21,7 +21,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
 
             if (success) {
 				$scope.isop = isop;
-				console.log($scope.isop);
 
             } else {
 				console.log(reason);
@@ -87,6 +86,8 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             }
 
         });
+
+        
 
         $scope.showPmBox = function(nick) {
 

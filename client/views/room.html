@@ -20,8 +20,16 @@
        	<h2> Users </h2>
            <ul class="list-group-list list-group-horizontal" id="users">
 				<li class="userlist-unstyled" ng-repeat="nick in nicks">
-         <a href="" ng-click="showPmBox(nick)"> {{nick}} {{isop}} </a>
+         <a href="" ng-click="showPmBox(nick)">{{nick}}</a> 
+         <select class ="opSelect"ng-show="isop"> 
+         <option disabled selected></option>
+         <option value="op"> op </option>
+         <option value="deop"> deop </option>
+          <option vaaue="kick"> kick </option>
+         <option value="ban"> ban </option>
+         </select>
 				</li>
+
 			</ul>
         </div>
 
@@ -56,5 +64,6 @@
       </form>
 
      </div>
+
 
 </div>

@@ -48,7 +48,8 @@ io.sockets.on('connection', function(socket) {
         //If the room does not exist
         if (rooms[room] === undefined) {
             rooms[room] = new Room();
-            //Op the user if he creates the room.
+			rooms[room].addUser(socket.username);
+			//Op the user if he creates the room.
             rooms[room].ops[socket.username] = socket.username;
             //If the user wants to password protect the room we set the password.
             if (pass !== undefined) {
@@ -57,7 +58,7 @@ io.sockets.on('connection', function(socket) {
             //Keep track of the room in the user object.
             users[socket.username].channels[room] = room;
             //Send the room information to the client.
-            fn(true, true, undefined);
+            fn(true, undefined);
             io.sockets.emit('updateusers', room, rooms[room].users, rooms[room].ops);
             //Update topic
             socket.emit('updatetopic', room, rooms[room].topic, socket.username);
@@ -84,9 +85,8 @@ io.sockets.on('connection', function(socket) {
             }
             //If accepted is set to true at this point the user is allowed to join the room.
             if (accepted) {
-				var isop = (rooms[room].ops[socket.username] !== undefined);
                 //We need to let the server know beforehand so that he starts to prepare the client template.
-                fn(true, isop, undefined);
+                fn(true, undefined);
                 //Add user to room.
                 rooms[room].addUser(socket.username);
                 //Keep track of the room in the user object.
@@ -97,7 +97,7 @@ io.sockets.on('connection', function(socket) {
                 socket.emit('updatetopic', room, rooms[room].topic, socket.username);
                 io.sockets.emit('servermessage', "join", room, socket.username);
             }
-            fn(false, false, reason);
+            fn(false, reason);
         }
     });
 

@@ -48,8 +48,8 @@ io.sockets.on('connection', function(socket) {
         //If the room does not exist
         if (rooms[room] === undefined) {
             rooms[room] = new Room();
-			rooms[room].addUser(socket.username);
-			//Op the user if he creates the room.
+            rooms[room].addUser(socket.username);
+            //Op the user if he creates the room.
             rooms[room].ops[socket.username] = socket.username;
             //If the user wants to password protect the room we set the password.
             if (pass !== undefined) {
@@ -301,17 +301,17 @@ io.sockets.on('connection', function(socket) {
 
 //Define the Room class/object.
 function Room() {
-    this.users = {},
-        this.ops = {},
-        this.banned = {},
-        this.messageHistory = [],
-        this.topic = "No topic has been set for room..",
-        this.locked = false,
-        this.password = "",
+    this.users = {};
+    this.ops = {};
+    this.banned = {};
+    this.messageHistory = [];
+    this.topic = "No topic has been set for room..";
+    this.locked = false;
+    this.password = "";
 
-        this.addUser = function(user) {
-            (user !== undefined) ? this.users[user] = user: console.log("ERROR: add user");
-        };
+    this.addUser = function(user) {
+        (user !== undefined) ? this.users[user] = user: console.log("ERROR: add user");
+    };
     this.banUser = function(user) {
         (user !== undefined) ? this.banned[user] = user: console.log("ERROR: ban user 1");
         (this.users[user] == user) ? delete this.users[user]: console.log("ERROR: ban user 2");

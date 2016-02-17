@@ -20,15 +20,15 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         }, function(success, isop, reason) {
 
             if (success) {
-				console.log("Joined room");
+                console.log("Joined room");
             } else {
-				console.log(reason);
-			}
-			
+                console.log(reason);
+            }
+
         });
 
         socket.on('updateusers', function(roomId, nicksId, ops) {
-			$scope.isop = (ops[$scope.nickId] !== undefined);
+            $scope.isop = (ops[$scope.nickId] !== undefined);
             if ($scope.roomId === roomId) {
                 $scope.nicks = nicksId;
             }

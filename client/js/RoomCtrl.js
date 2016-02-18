@@ -14,23 +14,29 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         $scope.pmMessages = [];
         $scope.pmSubmitMessage = '';
         $scope.isop = false;
+        $scope.nickSelect = '';
 
         socket.emit('joinroom', {
             room: $scope.roomId
-        }, function(success, isop, reason) {
+        }, function(success,reason) {
+            if (!success) {
+                if(reason === 'banned') {
+                $location.path('/rooms/' + $scope.nickId);
+                alertify.alert("You are banned from this room");
+                }
+                else {
 
-            if (success) {
-
-                console.log("Joined room");
-            } else {
-                console.log(reason);
-            }
+                    ///PASSWORD
+                }
+            } 
+            
 
         });
 
         socket.on('updateusers', function(roomId, nicksId, ops) {
-            $scope.isop = (ops[$scope.nickId] !== undefined);
+           
             if ($scope.roomId === roomId) {
+                 $scope.isop = (ops[$scope.nickId] !== undefined);
                 $scope.nicks = nicksId;
             }
         });
@@ -97,5 +103,96 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
 
         };
 
+        $scope.selectOrders = function(value,nick) {
+                socket.emit(value, { room: $scope.roomId , user: nick }, function (success) {
+                });   
+        };
+
+         socket.on('kicked', function(roomId, nickId, user) {
+                    if($scope.roomId === roomId && $scope.nickId === nickId) {
+                        $location.path('/rooms/' + $scope.nickId);
+                        $scope.roomId = '';
+                        alertify.error('You have been kicked from ' + roomId);
+                    }
+                    if($scope.nickId === user) {
+                        var message = 'has kicked ' + nickId;
+
+                        socket.emit('sendmsg', {
+                            roomName: $scope.roomId,
+                             msg: message
+                        });
+
+                    }
+        });
+
+         socket.on('banned', function(roomId, nickId, user) {
+            if($scope.roomId === roomId && $scope.nickId === nickId) {
+                $location.path('/rooms/' + $scope.nickId);
+                $scope.roomId = '';
+                alertify.error('You have been banned from ' + roomId, 0);
+            }
+            if($scope.nickId === user) {
+                 var message = 'has banned ' + nickId;
+
+                    socket.emit('sendmsg', {
+                    roomName: $scope.roomId,
+                    msg: message
+                });
+            }
+
+
+         });
+
+          socket.on('opped', function(roomId, nickId, user) {
+            if($scope.roomId === roomId && $scope.nickId === nickId) {
+                   alertify.success('You are now op');
+
+
+            }
+            if($scope.nickId === user) {
+                 var message = 'has opped ' + nickId;
+                    socket.emit('sendmsg', {
+                    roomName: $scope.roomId,
+                    msg: message
+                });
+            }
+
+
+         });
+
+         socket.on('deopped', function(roomId, nickId, user) {
+            if($scope.roomId === roomId && $scope.nickId === nickId) {
+                   //alertify.warning('You have been deopped');
+
+            }
+            if($scope.nickId === user) {
+                 var message = 'has deopped ' + nickId;
+                    socket.emit('sendmsg', {
+                    roomName: $scope.roomId,
+                    msg: message
+                });
+            }
+
+
+         });
+
+
+
+
+
+
+        $scope.orders = [{
+            value: 'op',
+            label: 'Give Op'
+        }, {
+            value: 'deop',
+            label: 'De Op'
+        }, {
+            value: 'kick',
+            label: 'Kick'
+        }, {
+            value: 'ban',
+            label: 'Ban'
+        }];
     }
 ]);

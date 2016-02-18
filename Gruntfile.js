@@ -6,7 +6,8 @@ module.exports = function(grunt) {
 				'**/*.js',
                 '!node_modules/**/*.js',
                 '!client/bower_components/**/*.js',
-                '!server/node_modules/**/*.js'
+                '!server/node_modules/**/*.js',
+                '!server/chatserver.js'
 			],
             options: {
                 curly: true,

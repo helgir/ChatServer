@@ -204,7 +204,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 $scope.topicToChange = '';
             }
 
-         }
+         };
 
          $scope.changePassword = function () {
 
@@ -215,12 +215,23 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             else {
                 console.log($scope.pwToChange);
                 socket.emit('setpassword' , {room: $scope.roomId, password: $scope.pwToChange });
+                alertify.success('Password changed to: ' + $scope.pwToChange);
                 $scope.pwToChange = '';
 
             }
 
 
-         }
+         };
+
+         $scope.removePassword = function () {
+
+            socket.emit('removepassword', {room: $scope.roomId}, function (success) {
+                if(success) {
+                    alertify.success('Password removed');
+
+                }
+            });
+         };
 
 
 

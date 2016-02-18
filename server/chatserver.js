@@ -63,6 +63,7 @@ io.sockets.on('connection', function(socket) {
             //Update topic
             socket.emit('updatetopic', room, rooms[room].topic, socket.username);
             io.sockets.emit('servermessage', "join", room, socket.username);
+			io.sockets.emit('roomlist', rooms);
         } else {
 
             //If the room isn't locked we set accepted to true.

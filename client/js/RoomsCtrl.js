@@ -33,11 +33,8 @@ angular.module("ChatApp").controller("RoomsCtrl", ["$scope", "$http", "$routePar
 
 
         socket.on("roomlist", function(data) {
-            var roomnames = Object.keys(data);
-
-            $scope.rooms = roomnames;
-
-
+			var roomnames = Object.keys(data);
+			$scope.rooms = roomnames;
         });
 
         socket.emit('rooms');

@@ -1,7 +1,7 @@
-angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routeParams", "$location", "socket", "alertify", "$rootScope",
+angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routeParams", "$location", "socket", "$rootScope",
 
 
-    function($scope, $http, $routeParams, $location, socket, alertify, $rootScope) {
+    function($scope, $http, $routeParams, $location, socket, $rootScope) {
 
         $scope.roomId = $routeParams.roomId;
         $scope.nickId = $routeParams.nickId;

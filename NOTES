@@ -36,3 +36,7 @@ Reverts the "ban" operation.
 
 
 -------------
+Því sem var breytt í chatserver.js
+
+-            //Remove the user from the room roster.		
+ -            delete rooms[opObj.room].users[opObj.user];

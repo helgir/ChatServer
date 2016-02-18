@@ -37,8 +37,8 @@
     </div>
     <div class ="right_col">
     
-            <div class="list-group-list list-group-horizontal"  ng-repeat="room in rooms">
-             <div>  <a ng-href="#/rooms/{{nickId}}/{{room}}" class="rooms_item list-group-item "><span class="glyphicon glyphicon-modal-window"></span> {{room}} </a>
+            <div class="list-group-list list-group-horizontal"  ng-repeat="room in roomlist">
+             <div>  <a ng-href="#/rooms/{{nickId}}/{{room.room}}" class="rooms_item list-group-item "><span class="glyphicon glyphicon-modal-window"></span> {{room.room}}   </br> <span class="glyphicon glyphicon-user"></span> {{room.size}}</a>
              </div>
         </div>
      

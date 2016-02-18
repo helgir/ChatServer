@@ -3,12 +3,12 @@ module.exports = function(grunt) {
     grunt.initConfig({
         jshint: {
             files: [
-				'**/*.js',
+                '**/*.js',
                 '!node_modules/**/*.js',
                 '!client/bower_components/**/*.js',
                 '!server/node_modules/**/*.js',
                 '!server/chatserver.js'
-			],
+            ],
             options: {
                 curly: true,
                 immed: true,

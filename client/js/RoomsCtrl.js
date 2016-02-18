@@ -31,14 +31,16 @@ angular.module("ChatApp").controller("RoomsCtrl", ["$scope", "$http", "$routePar
         };
 
 
-
         socket.on("roomlist", function(data) {
-            var roomnames = Object.keys(data);
-
-            $scope.rooms = roomnames;
-
-
+        $scope.rooms = data;
+        $scope.roomlist = [];
+        $.each($scope.rooms, function(key, value) {
+            $scope.roomlist.push({
+                room:key, 
+                size:Object.keys(value.users).length
+            });
         });
+    });
 
         socket.emit('rooms');
 

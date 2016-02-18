@@ -2,7 +2,7 @@ var express = require('express'),
     app = express(),
     http = require('http'),
     server = http.createServer(app),
-    io = require('socket.io').listen(server);
+    io = require('socket.io').listen(server); // jshint ignore:line
 
 server.listen(8080);
 
@@ -309,20 +309,44 @@ function Room() {
     this.password = "";
 
     this.addUser = function(user) {
-        (user !== undefined) ? this.users[user] = user: console.log("ERROR: add user");
+        if (user !== undefined) {
+            this.users[user] = user;
+        } else {
+            console.log("ERROR: add user");
+        }
     };
     this.banUser = function(user) {
-        (user !== undefined) ? this.banned[user] = user: console.log("ERROR: ban user 1");
-        (this.users[user] == user) ? delete this.users[user]: console.log("ERROR: ban user 2");
+        if (user !== undefined) {
+            this.banned[user] = user;
+        } else {
+            console.log("ERROR: ban user 1");
+        }
+        if (this.users[user] == user) {
+            delete this.users[user];
+        } else {
+            console.log("ERROR: ban user 2");
+        }
     };
     this.addMessage = function(message) {
-        (message !== undefined) ? this.messageHistory.push(message): console.log("ERROR: add message");
+        if (message !== undefined) {
+            this.messageHistory.push(message);
+        } else {
+            console.log("ERROR: add message");
+        }
     };
     this.setTopic = function(topic) {
-        (topic !== undefined) ? this.topic = topic: console.log("ERROR: set topic");
+        if (topic !== undefined) {
+            this.topic = topic;
+        } else {
+            console.log("ERROR: set topic");
+        }
     };
     this.setPassword = function(pass) {
-        (pass !== undefined) ? this.password = pass: console.log("ERROR: set pass");
+        if (pass !== undefined) {
+            this.password = pass;
+        } else {
+            console.log("ERROR: set pass");
+        }
         this.locked = true;
     };
     this.clearPassword = function() {

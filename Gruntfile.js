@@ -20,9 +20,10 @@ module.exports = function(grunt) {
                 undef: true,
                 globals: {
                     io: false,
+                    alertify: false,
                     angular: false,
                     jQuery: false,
-                    $: false,
+                    $: false
                 }
             }
         },

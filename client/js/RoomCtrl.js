@@ -15,9 +15,12 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         $scope.pmSubmitMessage = '';
         $scope.isop = false;
         $scope.nickSelect = '';
+        $scope.topicToChange = '';
+        $scope.pwToChange = '';
+        $scope.password = '';
 
         socket.emit('joinroom', {
-            room: $scope.roomId
+            room: $scope.roomId, 
         }, function(success,reason) {
             if (!success) {
                 if(reason === 'banned') {
@@ -25,8 +28,26 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 alertify.alert("You are banned from this room");
                 }
                 else {
+                        
 
-                    ///PASSWORD
+                        var password = prompt("Please enter password","");
+
+                     socket.emit('joinroom', {room: $scope.roomId, pass: password , function (success,reason) {
+
+                        if(success) {
+
+                        }
+                        else if(reason === 'wrong password') {
+                        $location.path('/rooms/' + $scope.nickId);
+                        alertify.error('Wrong Password');
+
+                        }
+
+
+
+                     }});   
+
+                    
                 }
             } 
             
@@ -172,6 +193,33 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
 
          });
 
+         $scope.changeTopic = function () {
+
+            if($scope.topicToChange === '') {
+
+            }
+            else {
+                socket.emit('settopic', { room: $scope.roomId , topic: $scope.topicToChange });
+                $scope.topicToChange = '';
+            }
+
+         }
+
+         $scope.changePassword = function () {
+
+
+             if($scope.pwToChange === '') {
+
+            }
+            else {
+                console.log($scope.pwToChange);
+                socket.emit('setpassword' , {room: $scope.roomId, password: $scope.pwToChange });
+                $scope.pwToChange = '';
+
+            }
+
+
+         }
 
 
 

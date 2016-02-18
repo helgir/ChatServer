@@ -32,15 +32,15 @@ angular.module("ChatApp").controller("RoomsCtrl", ["$scope", "$http", "$routePar
 
 
         socket.on("roomlist", function(data) {
-			$scope.rooms = data;
-			$scope.roomlist = [];
-			$.each($scope.rooms, function(key, value) {
-				$scope.roomlist.push({
-					room:key, 
-					size:Object.keys(value.users).length
-				});
-			});
-		});
+            $scope.rooms = data;
+            $scope.roomlist = [];
+            $.each($scope.rooms, function(key, value) {
+                $scope.roomlist.push({
+                    room: key,
+                    size: Object.keys(value.users).length
+                });
+            });
+        });
 
         socket.emit('rooms');
 

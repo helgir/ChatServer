@@ -5,9 +5,8 @@ module.exports = function(grunt) {
             files: [
                 '**/*.js',
                 '!node_modules/**/*.js',
-                '!client/bower_components/**/*.js',
                 '!server/node_modules/**/*.js',
-                '!server/chatserver.js'
+                '!client/bower_components/**/*.js'
             ],
             options: {
                 curly: true,
@@ -21,9 +20,10 @@ module.exports = function(grunt) {
                 undef: true,
                 globals: {
                     io: false,
+                    alertify: false,
                     angular: false,
                     jQuery: false,
-                    $: false,
+                    $: false
                 }
             }
         },
@@ -32,7 +32,14 @@ module.exports = function(grunt) {
             tasks: ['jshint']
         },
         jsbeautifier: {
-            files: ['**.js', '!node_modules/**', '!client/bower_component/**', "!server/node_modules/**"],
+            files: [
+                '**/*.js',
+                '**/*.css',
+                '**/*.html',
+                '!node_modules/**/*',
+                '!server/node_modules/**/*',
+                '!client/bower_components/**/*'
+            ],
             options: {
                 preserveNewlines: false
             }

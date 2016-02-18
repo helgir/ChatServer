@@ -58,19 +58,19 @@
             <input class="submitBox " type="text" ng-model="submitMessage" placeholder=""></input>
         </form>
 
-     </div>
-     <div ng-show="isop" class="operatorCtrl">
-                   <form ng-submit="changeTopic()">
-              <button  type="submit"class="btn btn-default" ng-click="changeTopic()">Change</button> 
-              <input  class="changeTopic" type="text" ng-model="topicToChange" placeholder="Change Topic"></input> 
-      </form>
-      <form ng-submit="changePassword()">
-              <button  type="submit"class="btn btn-default" ng-click="changePassword()">Change</button> 
-              <input   type="text" ng-model="pwToChange" placeholder="Change Password"></input> 
-               <button ng-click="removePassword()" class="btn btn-default"> Remove Password</button>
-      </form>
-        
-     </div>
+    </div>
+    <div ng-show="isop" class="operatorCtrl">
+        <form ng-submit="changeTopic()">
+            <button type="submit" class="btn btn-default" ng-click="changeTopic()">Change</button>
+            <input class="changeTopic" type="text" ng-model="topicToChange" placeholder="Change Topic"></input>
+        </form>
+        <form ng-submit="changePassword()">
+            <button type="submit" class="btn btn-default" ng-click="changePassword()">Change</button>
+            <input type="text" ng-model="pwToChange" placeholder="Change Password"></input>
+            <button ng-click="removePassword()" class="btn btn-default"> Remove Password</button>
+        </form>
+
+    </div>
 
 
 </div>

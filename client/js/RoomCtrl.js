@@ -29,24 +29,27 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                     alertify.alert("You are banned from this room");
                 } else {
 
-                        var password = prompt("Please enter password","");
+                    var password = prompt("Please enter password", "");
 
-                     socket.emit('joinroom', {room: $scope.roomId, pass: password , function (success,reason) {
+                    socket.emit('joinroom', {
+                        room: $scope.roomId,
+                        pass: password,
+                        function(success, reason) {
 
-                        if(success) {
+                            if (success) {
+
+                            } else if (reason === 'wrong password') {
+                                $location.path('/rooms/' + $scope.nickId);
+                                alertify.error('Wrong Password');
+
+                            }
+
+
 
                         }
-                        else if(reason === 'wrong password') {
-                        $location.path('/rooms/' + $scope.nickId);
-                        alertify.error('Wrong Password');
-
-                        }
+                    });
 
 
-
-                     }});   
-
-                    
                 }
             }
 
@@ -194,44 +197,50 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
 
         });
 
-         $scope.changeTopic = function () {
+        $scope.changeTopic = function() {
 
-            if($scope.topicToChange === '') {
+            if ($scope.topicToChange === '') {
 
-            }
-            else {
-                socket.emit('settopic', { room: $scope.roomId , topic: $scope.topicToChange });
+            } else {
+                socket.emit('settopic', {
+                    room: $scope.roomId,
+                    topic: $scope.topicToChange
+                });
                 $scope.topicToChange = '';
             }
 
-         };
+        };
 
-         $scope.changePassword = function () {
+        $scope.changePassword = function() {
 
 
-             if($scope.pwToChange === '') {
+            if ($scope.pwToChange === '') {
 
-            }
-            else {
+            } else {
                 console.log($scope.pwToChange);
-                socket.emit('setpassword' , {room: $scope.roomId, password: $scope.pwToChange });
+                socket.emit('setpassword', {
+                    room: $scope.roomId,
+                    password: $scope.pwToChange
+                });
                 alertify.success('Password changed to: ' + $scope.pwToChange);
                 $scope.pwToChange = '';
 
             }
 
 
-         };
+        };
 
-         $scope.removePassword = function () {
+        $scope.removePassword = function() {
 
-            socket.emit('removepassword', {room: $scope.roomId}, function (success) {
-                if(success) {
+            socket.emit('removepassword', {
+                room: $scope.roomId
+            }, function(success) {
+                if (success) {
                     alertify.success('Password removed');
 
                 }
             });
-         };
+        };
 
 
 

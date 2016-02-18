@@ -23,6 +23,7 @@ module.exports = function(grunt) {
                     alertify: false,
                     angular: false,
                     jQuery: false,
+                    prompt: false,
                     $: false
                 }
             }

@@ -146,8 +146,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
           socket.on('opped', function(roomId, nickId, user) {
             if($scope.roomId === roomId && $scope.nickId === nickId) {
                    alertify.success('You are now op');
-
-
             }
             if($scope.nickId === user) {
                  var message = 'has opped ' + nickId;
@@ -156,8 +154,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                     msg: message
                 });
             }
-
-
          });
 
          socket.on('deopped', function(roomId, nickId, user) {

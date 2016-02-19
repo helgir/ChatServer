@@ -7,7 +7,7 @@
     <div id="content" class="well" scroll-glue>
         <ul ng-repeat="message in messages">
             <li>
-                <span>{{message.timestamp}} {{message.nick}}: {{message.message}} </span>
+                <span>{{changedTime}} {{message.nick}}: {{message.message}} </span>
             </li>
         </ul>
 
@@ -35,7 +35,7 @@
             </div>
             <ul ng-repeat="message in pmMessages">
                 <li>
-                    <span>{{message.timestamp}} {{message.nick}}: {{message.message}} </span>
+                    <span>{{message.timestamp}} {{message.nick}} > {{ message.message}} </span>
                 </li>
             </ul>
 

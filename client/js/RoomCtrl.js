@@ -240,6 +240,17 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             });
         };
 
+       
+        moment.locale("is");
+        var date =  moment().format('LTS');
+        $scope.changedTime = date;
+  
+
+
+
+
+
+
 
         $scope.orders = [{
             value: 'op',

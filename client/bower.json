@@ -22,6 +22,7 @@
   "dependencies": {
     "angular-route": "^1.4.9",
     "angular": "^1.4.9",
-    "angular-scroll-glue": "^2.0.6"
+    "angular-scroll-glue": "^2.0.6",
+    "moment": "^2.11.2"
   }
 }

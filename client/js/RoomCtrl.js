@@ -17,7 +17,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         $scope.nickSelect = '';
         $scope.topicToChange = '';
         $scope.pwToChange = '';
-        $scope.password = '';
 
         socket.emit('joinroom', {
 
@@ -183,7 +182,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
 
         socket.on('deopped', function(roomId, nickId, user) {
             if ($scope.roomId === roomId && $scope.nickId === nickId) {
-                //alertify.warning('You have been deopped');
+                alertify.error('You have been deopped');
 
             }
             if ($scope.nickId === user) {

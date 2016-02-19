@@ -21,7 +21,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
 
         socket.emit('joinroom', {
             room: $scope.roomId,
-			pass: ("#" + $scope.roomId + "-password").val()
+			pass: $("#" + $scope.roomId + "-password").val()
         }, function(success, reason) {
             if (!success) {
                 if (reason === 'banned') {

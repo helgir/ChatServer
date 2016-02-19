@@ -20,7 +20,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         $scope.glued = true;
 
         socket.emit('joinroom', {
-            room: $scope.roomId
+            room: $scope.roomId,
         }, function(success, reason) {
             if (!success) {
                 if (reason === 'banned') {

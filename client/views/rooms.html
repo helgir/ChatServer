@@ -38,25 +38,26 @@
     <div class="right_col">
 
         <div class="list-group-list list-group-horizontal" ng-repeat="room in roomlist">
-            <div ng-if='item.locked === false' > 
-				<a ng-href="#/rooms/{{nickId}}/{{room.room}}" class="rooms_item list-group-item ">
+            <div ng-if='room.locked === false' > 
+				<a ng-href="#/rooms/{{nickId}}/{{room.name}}" class="rooms_item list-group-item ">
 					<span class="glyphicon glyphicon-modal-window"></span> 
-					{{room.room}}   
+					{{room.name}}   
 					</br> 
 					<span class="glyphicon glyphicon-user"></span> 
 					{{room.size}}
 				</a>
             </div>
-			<div ng-if='item.locked === true' >
+			<div ng-if='room.locked === true' >
 				<div class="rooms_item list-group-item ">
-					<span class="glyphicon glyphicon-lock"></span> 
-					<span class="glyphicon glyphicon-modal-window"></span> 
-					{{room.room}}   
-					</br> 
-					<span class="glyphicon glyphicon-user"></span> 
-					{{room.size}}
-					<input type="text" ng-model="room-password" placeholder="Enter password"></input>
-					<button class="btn btn-default" ng-click="joinRoom()">Join Room</button>
+					<a ng-href="#/rooms/{{nickId}}/{{room.name}}" class="rooms_item list-group-item ">
+						<span class="glyphicon glyphicon-lock"></span> 
+						<span class="glyphicon glyphicon-modal-window"></span> 
+						{{room.name}}   
+						</br> 
+						<span class="glyphicon glyphicon-user"></span> 
+						{{room.size}}
+						<input type="text" id="{{room.name + '-password'}}" placeholder="Enter password"></input>
+					</a>
 				</div>
 			</div>
         </div>

@@ -1,1 +1,1 @@
-angular.module('ChatApp', ["ng", "ngRoute"]);
+angular.module('ChatApp', ["ng", "ngRoute", 'luegg.directives']);

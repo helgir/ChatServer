@@ -17,6 +17,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         $scope.nickSelect = '';
         $scope.topicToChange = '';
         $scope.pwToChange = '';
+        $scope.glued = true;
 
         socket.emit('joinroom', {
             room: $scope.roomId,
@@ -64,6 +65,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
 
 
         $scope.sendMSG = function() {
+
             if ($scope.submitMessage === '') {
                 //skip empty text
             } else {
@@ -75,10 +77,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
 
 
             $scope.submitMessage = '';
-            var scrollToBottom = $('#content');
-            scrollToBottom.animate({
-                scrollTop: scrollToBottom.prop('scrollHeight')
-            }, 1000);
+        
         };
 
         $scope.sendPmMSG = function() {
@@ -129,12 +128,13 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 room: $scope.roomId,
                 user: nick
             }, function(success) {});
+
         };
 
         socket.on('kicked', function(roomId, nickId, user) {
             if ($scope.roomId === roomId && $scope.nickId === nickId) {
                 $location.path('/rooms/' + $scope.nickId);
-                $scope.roomId = '';
+                //$scope.roomId = '';
                 alertify.error('You have been kicked from ' + roomId);
             }
             if ($scope.nickId === user) {
@@ -238,9 +238,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 }
             });
         };
-
-
-
 
 
         $scope.orders = [{

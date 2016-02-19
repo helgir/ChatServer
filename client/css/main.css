@@ -104,7 +104,7 @@ h4 {
     height: 500px;
     text-align: center;
     max-height: 500px;
-    overflow-x: hidden;
+    overflow-y: scroll;
     background: white;
 }
 

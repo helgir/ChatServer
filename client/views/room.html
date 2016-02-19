@@ -4,7 +4,7 @@
         <h2 class="headings"> Hello {{nickId}} welcome to chat room: {{roomId}} </h2>
         <h2 class="headings">Topic of the room is: {{topic}}</h2>
     </div>
-    <div id="content" class="well">
+    <div id="content" class="well" scroll-glue>
         <ul ng-repeat="message in messages">
             <li>
                 <span>{{message.timestamp}} {{message.nick}}: {{message.message}} </span>
@@ -28,7 +28,7 @@
         </ul>
     </div>
 
-    <div class="pmBox" ng-show="userSelected">
+    <div class="pmBox" ng-show="userSelected" >
         <div class="pmBoxTop">
             <div class="pmBoxHead">
                 Send pm to : {{nickSelected}}

@@ -19,7 +19,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         $scope.pwToChange = '';
 
         socket.emit('joinroom', {
-
             room: $scope.roomId
         }, function(success, reason) {
             if (!success) {
@@ -216,7 +215,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             if ($scope.pwToChange === '') {
 
             } else {
-                console.log($scope.pwToChange);
                 socket.emit('setpassword', {
                     room: $scope.roomId,
                     password: $scope.pwToChange

@@ -33,6 +33,21 @@ module.exports = function(grunt) {
             files: ['<%= jshint.files %>'],
             tasks: ['jshint']
         },
+        concat: {
+          options: {
+            separator: ';'
+          },
+          dist: {
+            src: ['client/js/*.js'],
+            dest: 'client/built/concat.js',
+          },
+        },
+        uglify: {
+          dist: {
+            src: ['client/built/concat.js'],
+            dest: 'client/built/concat.min.js',
+          },
+        },
         jsbeautifier: {
             files: [
                 '**/*.js',
@@ -53,5 +68,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default', ['jshint']);
     grunt.loadNpmTasks("grunt-jsbeautifier");
+    grunt.loadNpmTasks("grunt-contrib-concat");
+    grunt.loadNpmTasks("grunt-contrib-uglify");
 
 };

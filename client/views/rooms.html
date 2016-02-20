@@ -1,64 +1,38 @@
 <div class="wrapper_rooms">
-
     <div class="header_rooms">
-
     </div>
     <div class="left_col">
-
         <div class="form-login-rooms">
             <h4>Hello {{nickId}}</h4>
             <input type="text" ng-model="roomId" placeholder="Enter room name"></input>
             </br>
-
             </br>
             <div class="wrapper" ng-hide="loggedIn">
-                <span class="group-btn">     
-                 <button class="btn btn-default" ng-click="newRoom()">Create Room</button>
-                         <div class="alert alert-danger" ng-show="create_error" id="errorMessage_rooms" >
-                                {{errorMessage}}
-                </div>
-                </br>
-
-                </br>
-                
-                
-            </span>
-
+                <span class="group-btn">
+                    <button class="btn btn-default" ng-click="newRoom()">Create Room</button>
+                    <div class="alert alert-danger" ng-show="create_error" id="errorMessage_rooms" >
+                        {{errorMessage}}
+                    </div>
+                    <div ng-show="create_error === false"> 
+                        </br>
+                        </br>
+                    </div>
+                </span>
             </div>
-
         </div>
-
-
-
-
     </div>
     <div class="right_col_heading">
         <h2 class="headings"> Rooms List </h2>
     </div>
     <div class="right_col">
-
-        <div class="list-group-list list-group-horizontal" ng-repeat="room in roomlist">
-            <div>
-                <a ng-href="#/rooms/{{nickId}}/{{room.name}}?locked={{room.locked}}" class="rooms_item list-group-item ">
-                    <span class="glyphicon glyphicon-modal-window"></span> {{room.name}}
-                    <span ng-if='room.locked === true' class="glyphicon glyphicon-lock pull-right"></span>
-                    </br>
-                    <span class="glyphicon glyphicon-user"></span> {{room.size}}
-                </a>
-            </div>
-        </div>
-
+        <ul class="rooms-list list-group-list list-group-horizontal" ng-repeat="room in roomlist">
+            <a ng-href="#/rooms/{{nickId}}/{{room.name}}?locked={{room.locked}}" class="rooms_item list-group-item">
+                <span class="glyphicon glyphicon-modal-window"></span> {{room.name}}
+                <span ng-if='room.locked === true' class="glyphicon glyphicon-lock pull-right"></span>
+                </br>
+				<span class="glyphicon glyphicon-user"></span> {{room.size}}
+            </a>
+        </ul>
     </div>
-
-
-
 </div>
-
-
-
-
-
-
-
-
 </div>

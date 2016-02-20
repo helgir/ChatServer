@@ -23,6 +23,10 @@
     "angular-route": "^1.4.9",
     "angular": "^1.4.9",
     "angular-scroll-glue": "^2.0.6",
-    "moment": "^2.11.2"
+    "moment": "^2.11.2",
+    "alertify.js": "^0.3.11",
+    "bootstrap": "^3.3.6",
+    "font-awesome": "^4.5.0",
+    "jquery": "^2.2.0"
   }
 }

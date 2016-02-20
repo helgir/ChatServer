@@ -39,7 +39,7 @@
 
         <div class="list-group-list list-group-horizontal" ng-repeat="room in roomlist">
             <div>
-                <a ng-href="#/rooms/{{nickId}}/{{room.name}}" class="rooms_item list-group-item ">
+                <a ng-href="#/rooms/{{nickId}}/{{room.name}}?locked={{room.locked}}" class="rooms_item list-group-item ">
                     <span class="glyphicon glyphicon-modal-window"></span> {{room.name}}
                     <span ng-if='room.locked === true' class="glyphicon glyphicon-lock pull-right"></span>
                     </br>

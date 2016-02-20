@@ -4,8 +4,7 @@ var express = require('express'),
     server = http.createServer(app),
     io = require('socket.io').listen(server); // jshint ignore:line
 
-server.listen(process.env.PORT ? process.env.PORT : 8080);
-
+server.listen(8080);
 
 //Store room in an object.
 var rooms = {};
@@ -23,7 +22,7 @@ io.sockets.on('connection', function(socket) {
     socket.on('adduser', function(username, fn) {
 
         //Check if username is avaliable.
-        if (users[username] === undefined && username.toLowerCase != "server" && username.length < 21) {
+        if (users[username] === undefined && username.toLowerCase() != "server" && username.length < 21) {
             socket.username = username;
 
             //Store user object in global user roster.
@@ -37,14 +36,10 @@ io.sockets.on('connection', function(socket) {
             fn(false); // Callback, it wasn't available
         }
     });
-
-    //When a user joins a room this processes the request.
-    socket.on('joinroom', function(joinObj, fn) {
-
-        var room = joinObj.room;
+	
+	socket.on('createroom', function(joinObj, fn) {
+		var room = joinObj.room;
         var pass = joinObj.pass;
-        var accepted = true;
-        var reason;
 
         //If the room does not exist
         if (rooms[room] === undefined) {
@@ -67,7 +62,20 @@ io.sockets.on('connection', function(socket) {
             socket.emit('updatetopic', room, rooms[room].topic, socket.username);
             io.sockets.emit('servermessage', "join", room, socket.username);
             io.sockets.emit('roomlist', rooms);
-        } else {
+        }
+		fn(false, "room name taken");
+	});
+
+    //When a user joins a room this processes the request.
+    socket.on('joinroom', function(joinObj, fn) {
+
+        var room = joinObj.room;
+        var pass = joinObj.pass;
+        var accepted = true;
+        var reason;
+
+        //If the room does exist
+        if (rooms[room] !== undefined) {
 
             //If the room isn't locked we set accepted to true.
             if (rooms[room].locked === false) {
@@ -105,6 +113,7 @@ io.sockets.on('connection', function(socket) {
             }
             fn(false, reason);
         }
+		fn(false, "room does not exist");
     });
 
     // when the client emits 'sendchat', this listens and executes
@@ -149,14 +158,14 @@ io.sockets.on('connection', function(socket) {
         //remove the user from the room roster and room op roster.
         if (rooms[room] !== undefined) {
             delete rooms[room].users[socket.username];
-        }
-        //Remove the channel from the user object in the global user roster.
-        if (users[socket.username] !== undefined) {
-            delete users[socket.username].channels[room];
-        }
-        //Update the userlist in the room.
-        io.sockets.emit('updateusers', room, rooms[room].users, rooms[room].ops);
-        io.sockets.emit('servermessage', "part", room, socket.username);
+			//Remove the channel from the user object in the global user roster.
+			if (users[socket.username] !== undefined) {
+				delete users[socket.username].channels[room];
+			}
+			//Update the userlist in the room.
+			io.sockets.emit('updateusers', room, rooms[room].users, rooms[room].ops);
+			io.sockets.emit('servermessage', "part", room, socket.username);
+		}
     });
 
     // when the user disconnects.. perform this

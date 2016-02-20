@@ -4,7 +4,11 @@ var express = require('express'),
     server = http.createServer(app),
     io = require('socket.io').listen(server); // jshint ignore:line
 
-server.listen(8080);
+port = process.env.PORT || 8080;
+
+app.use(express.static(__dirname + "/"))
+
+server.listen(port);
 
 //Store room in an object.
 var rooms = {};

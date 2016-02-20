@@ -19,42 +19,45 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         $scope.pwToChange = '';
         $scope.glued = true;
 
-        socket.emit('joinroom', {
-            room: $scope.roomId,
-            pass: $("#" + $scope.roomId + "-password").val()
-        }, function(success, reason) {
-            if (!success) {
-                if (reason === 'banned') {
-                    $location.path('/rooms/' + $scope.nickId);
-                    alertify.alert("You are banned from this room");
-                } else {
+        joinRoom();
 
-                    var password = prompt("Please enter password", "");
-
-                    socket.emit('joinroom', {
-                        room: $scope.roomId,
-                        pass: password,
-                        function(success, reason) {
-
-                            if (success) {
-
-                            } else if (reason === 'wrong password') {
-                                $location.path('/rooms/' + $scope.nickId);
-                                alertify.error('Wrong Password');
-
-                            }
-
-
-
-                        }
-                    });
-
-
-                }
+        function joinRoom() {
+            var password;
+            if ($routeParams.locked === 'true') {
+                password = askForPassword();
             }
+            socket.emit('joinroom', {
+                room: $scope.roomId,
+                pass: password
+            }, function(success, reason) {
+                console.log(reason);
+                if (!success) {
+                    if (reason === 'banned') {
+                        $location.path('/rooms/' + $scope.nickId);
+                        alertify.alert("You are banned from this room");
+                    } else if (reason === "wrong password") {
+                        alertify.alert("Wrong password!");
+                        joinRoom();
+                    }
+                }
+            });
+        }
 
-
-        });
+        function askForPassword() {
+            alertify.set({
+                labels: {
+                    ok: "Join",
+                    cancel: "Cancel"
+                }
+            });
+            alertify.prompt('Please enter password').set('onok', function(successEvent, password) {
+                console.log(password);
+                return password;
+            }).set('oncancel', function(cancelEvent) {
+                this.close();
+                $location.path('/rooms/' + $scope.nickId);
+            }).set('type', 'text');
+        }
 
         socket.on('updateusers', function(roomId, nicksId, ops) {
 
@@ -240,17 +243,9 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             });
         };
 
-
         moment.locale("is");
         var date = moment().format('LTS');
         $scope.changedTime = date;
-
-
-
-
-
-
-
 
         $scope.orders = [{
             value: 'op',

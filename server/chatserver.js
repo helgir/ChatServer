@@ -56,7 +56,9 @@ io.sockets.on('connection', function(socket) {
                 rooms[room].setPassword(pass);
             }
             //Keep track of the room in the user object.
-            users[socket.username].channels[room] = room;
+            if (users[socket.username] !== undefined) {
+                users[socket.username].channels[room] = room;
+            }
             //Send the room information to the client.
             fn(true, undefined);
             io.sockets.emit('updateusers', room, rooms[room].users, rooms[room].ops);
@@ -91,7 +93,9 @@ io.sockets.on('connection', function(socket) {
                 //Add user to room.
                 rooms[room].addUser(socket.username);
                 //Keep track of the room in the user object.
-                users[socket.username].channels[room] = room;
+                if (users[socket.username] !== undefined) {
+                    users[socket.username].channels[room] = room;
+                }
                 //Send the room information to the client.
                 io.sockets.emit('updateusers', room, rooms[room].users, rooms[room].ops);
                 socket.emit('updatechat', room, rooms[room].messageHistory);
@@ -142,9 +146,13 @@ io.sockets.on('connection', function(socket) {
     //When a user leaves a room this gets performed.
     socket.on('partroom', function(room) {
         //remove the user from the room roster and room op roster.
-        delete rooms[room].users[socket.username];
+        if (rooms[room] !== undefined) {
+            delete rooms[room].users[socket.username];
+        }
         //Remove the channel from the user object in the global user roster.
-        delete users[socket.username].channels[room];
+        if (users[socket.username] !== undefined) {
+            delete users[socket.username].channels[room];
+        }
         //Update the userlist in the room.
         io.sockets.emit('updateusers', room, rooms[room].users, rooms[room].ops);
         io.sockets.emit('servermessage', "part", room, socket.username);
@@ -152,7 +160,7 @@ io.sockets.on('connection', function(socket) {
 
     // when the user disconnects.. perform this
     socket.on('disconnect', function() {
-        if (socket.username) {
+        if (socket.username && users[socket.username] !== undefined) {
             //If the socket doesn't have a username the client joined and parted without
             //chosing a username, so we just close the socket without any cleanup.
             for (var room in users[socket.username].channels) {
@@ -172,7 +180,7 @@ io.sockets.on('connection', function(socket) {
     socket.on('kick', function(kickObj, fn) {
         console.log(socket.username + " kicked " + kickObj.user + " from " + kickObj.room);
 
-        if (rooms[kickObj.room].ops[socket.username] !== undefined) {
+        if (rooms[kickObj.room] !== undefined && rooms[kickObj.room].ops[socket.username] !== undefined) {
             //Remove the user from the room roster.
             delete rooms[kickObj.room].users[kickObj.user];
             //Remove the user from the ops roster.
@@ -190,7 +198,7 @@ io.sockets.on('connection', function(socket) {
     //When a user tries to op another user this gets performed.
     socket.on('op', function(opObj, fn) {
         console.log(socket.username + " opped " + opObj.user + " from " + opObj.room);
-        if (rooms[opObj.room].ops[socket.username] !== undefined) {
+        if (rooms[opObj.room] !== undefined && rooms[opObj.room].ops[socket.username] !== undefined) {
             //Op the user.
             rooms[opObj.room].ops[opObj.user] = opObj.user;
             //Broadcast to the room who got opped.
@@ -207,7 +215,7 @@ io.sockets.on('connection', function(socket) {
     socket.on('deop', function(deopObj, fn) {
         console.log(socket.username + " deopped " + deopObj.user + " from " + deopObj.room);
         //If user is OP
-        if (rooms[deopObj.room].ops[socket.username] !== undefined) {
+        if (rooms[deopObj.room] !== undefined && rooms[deopObj.room].ops[socket.username] !== undefined) {
             //Remove the user from the room op roster.
             delete rooms[deopObj.room].ops[deopObj.user];
             //Add the user to the room roster.
@@ -224,7 +232,7 @@ io.sockets.on('connection', function(socket) {
 
     //Handles banning the user from a room.
     socket.on('ban', function(banObj, fn) {
-        if (rooms[banObj.room].ops[socket.username] !== undefined) {
+        if (rooms[banObj.room] !== undefined && rooms[banObj.room].ops[socket.username] !== undefined) {
             //Remove the channel from the user in the global user roster.
             delete users[banObj.user].channels[banObj.room];
             //Add the user to the ban list and remove him from the room user roster.
@@ -239,7 +247,7 @@ io.sockets.on('connection', function(socket) {
 
     //Handles unbanning the user.
     socket.on('unban', function(unbanObj, fn) {
-        if (rooms[unbanObj.room].ops[socket.username] !== undefined) {
+        if (rooms[unbanObj.room] !== undefined && rooms[unbanObj.room].ops[socket.username] !== undefined) {
             //Remove the user from the room ban list.
             delete rooms[unbanObj.room].banned[unbanObj.user];
             fn(true);
@@ -267,7 +275,7 @@ io.sockets.on('connection', function(socket) {
     //Sets topic for room.
     socket.on('settopic', function(topicObj, fn) {
         //If user is OP
-        if (rooms[topicObj.room].ops[socket.username] !== undefined) {
+        if (rooms[topicObj.room] !== undefined && rooms[topicObj.room].ops[socket.username] !== undefined) {
             rooms[topicObj.room].setTopic(topicObj.topic);
             //Broadcast to room that the user changed the topic.
             io.sockets.emit('updatetopic', topicObj.room, topicObj.topic, socket.username);
@@ -281,7 +289,7 @@ io.sockets.on('connection', function(socket) {
     socket.on('setpassword', function(passwordObj, fn) {
 
         //If user is OP
-        if (rooms[passwordObj.room].ops[socket.username] !== undefined) {
+        if (rooms[passwordObj.room] !== undefined && rooms[passwordObj.room].ops[socket.username] !== undefined) {
             rooms[passwordObj.room].setPassword(passwordObj.password);
             fn(true);
         }
@@ -290,7 +298,7 @@ io.sockets.on('connection', function(socket) {
 
     //Unlocks the room.
     socket.on('removepassword', function(remObj, fn) {
-        if (rooms[remObj.room].ops[socket.username] !== undefined) {
+        if (rooms[remObj.room] !== undefined && rooms[remObj.room].ops[socket.username] !== undefined) {
             rooms[remObj.room].clearPassword();
             fn(true);
         }

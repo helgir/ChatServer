@@ -35,14 +35,17 @@ module.exports = function(grunt) {
         },
         concat: {
           options: {
-            // define a string to put between each file in the concatenated output
             separator: ';'
           },
           dist: {
-            // the files to concatenate
             src: ['client/js/*.js'],
-            // the location of the resulting JS file
             dest: 'client/built/concat.js',
+          },
+        },
+        uglify: {
+          dist: {
+            src: ['client/built/concat.js'],
+            dest: 'client/built/concat.min.js',
           },
         },
         jsbeautifier: {
@@ -66,5 +69,6 @@ module.exports = function(grunt) {
     grunt.registerTask('default', ['jshint']);
     grunt.loadNpmTasks("grunt-jsbeautifier");
     grunt.loadNpmTasks("grunt-contrib-concat");
+    grunt.loadNpmTasks("grunt-contrib-uglify");
 
 };

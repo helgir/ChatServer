@@ -1,0 +1,32 @@
+{
+  "name": "ChatServer",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "3.1.0",
+    "socket.io": "0.9.13"
+  },
+  "description": " ",
+  "main": "Gruntfile.js",
+  "engines": {
+    "node" : "5.x.x",
+    "npm" : "3.x.x"
+  },
+  "start":"node chatserver.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/helgir/ChatServer/issues"
+  },
+  "homepage": "https://github.com/helgir/ChatServer#readme",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.12.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-jsbeautifier": "^0.2.10"
+  }
+}

@@ -7,14 +7,6 @@
   },
   "description": " ",
   "main": "Gruntfile.js",
-  "engines": {
-    "node": "5.x.x",
-    "npm": "3.x.x"
-  },
-  "scripts": {
-    "start": "node chatserver.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {},
   "keywords": [],
   "author": "",

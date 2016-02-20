@@ -126,6 +126,7 @@ h4 {
 }
 
 .pmBoxTop {
+    text-align: left;
     word-wrap: break-word;
     overflow-wrap: break-word;
     height: 340px;

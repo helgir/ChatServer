@@ -11,7 +11,8 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         $scope.topic = '';
         $scope.userSelected = false;
         $scope.nickSelected = '';
-        $scope.pmMessages = [];
+        $scope.pmMessages = {};
+		$scope.pmUnreadFrom = [];
         $scope.pmSubmitMessage = '';
         $scope.isop = false;
         $scope.nickSelect = '';
@@ -60,6 +61,9 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             if ($scope.roomId === roomId) {
                 $scope.isop = (ops[$scope.nickId] !== undefined);
                 $scope.nicks = nicksId;
+				for(var nick in $scope.nicks) {
+					$scope.pmUnreadFrom[nick] = false;
+				}
             }
         });
 
@@ -75,7 +79,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 });
             }
 
-
             $scope.submitMessage = '';
 
         };
@@ -86,28 +89,35 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             }
             else {
                 console.log($scope.pmSubmitMessage);
-                socket.emit('privatemsg', { nick: $scope.nickSelected, message: $scope.pmSubmitMessage }, function (success) {});
-                 var pm = {
-                        sender : $scope.nickId,
-                        message : $scope.pmSubmitMessage,
-                        receiver : $scope.nickSelected
-                };
-                $scope.pmMessages.push(pm);
-                $scope.pmSubmitMessage = '';
-                  
+                socket.emit('privatemsg', { nick: $scope.nickSelected, message: $scope.pmSubmitMessage }, function (success) {
+					if(success) {
+						if($scope.pmMessages[$scope.nickSelected] === undefined) {
+							$scope.pmMessages[$scope.nickSelected] = [];
+						}
+						$scope.pmMessages[$scope.nickSelected].push({sender: $scope.nickId, message: $scope.pmSubmitMessage});
+						$scope.pmSubmitMessage = '';
+					} else {
+						if($scope.pmMessages[$scope.nickSelected] === undefined) {
+							$scope.pmMessages[$scope.nickSelected] = [];
+						}
+						$scope.pmMessages[$scope.nickSelected].push({sender: "server", message: "Failed to send message"});
+					}
+				});                
             }
-
         };
 
         socket.on('recv_privatemsg', function(username, message) {
-            
-                var pm = {
-                        sender : username,
-                        message : message,
-                        receiver : $scope.nickId
-                };
-                $scope.pmMessages.push(pm);
-
+        
+			if($scope.pmMessages[username] === undefined) {
+				$scope.pmMessages[username] = [];
+			}
+            $scope.pmMessages[username].push({sender: username, message: message});
+			if($scope.nickSelected !== username) {
+				$scope.pmUnreadFrom[username] = true;
+			}
+			if($scope.userSelected === false) {
+				$scope.showPmBox(username);
+			}
          });
 
         $scope.partRoom = function() {
@@ -133,16 +143,18 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
 
 
         $scope.showPmBox = function(nick) {
-
+			if ($scope.nickId === nick) {
+				return;
+			}
             if ($scope.nickSelected != nick) {
                 $scope.nickSelected = nick;
                 $scope.userSelected = true;
+				$scope.pmUnreadFrom[nick] = false;
             } else {
-
                 $scope.userSelected = false;
                 $scope.nickSelected = '';
+				$scope.pmUnreadFrom[nick] = false;
             }
-
         };
 
         $scope.selectOrders = function(value, nick) {

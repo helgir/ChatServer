@@ -1,4 +1,36 @@
-angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routeParams", "$location", "socket", "$rootScope",
+angular.module("ChatApp").controller("HomeCtrl", ["$scope", "$http", "$location", "socket", "$rootScope",
+    function($scope, $http, $location, socket, $rootScope) {
+
+
+        $scope.nickId = '';
+        $scope.loggedIn = false;
+        $scope.errorMessage = '';
+        $scope.login_error = false;
+
+
+        $scope.login = function() {
+            if ($scope.nickId === '') {
+                $scope.loggedIn = false;
+                $scope.login_error = true;
+                $scope.errorMessage = 'Please enter nickname';
+                return;
+            }
+
+            socket.emit("adduser", $scope.nickId, function(available) {
+                if (available) {
+                    $scope.loggedIn = true;
+                    $location.path('/rooms/' + $scope.nickId);
+                } else {
+                    $scope.loggedIn = false;
+                    $scope.login_error = true;
+                    $scope.errorMessage = 'This nickname is unavailable';
+                }
+            });
+        };
+    }
+]);
+;angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routeParams", "$location", "socket", "$rootScope",
+
 
     function($scope, $http, $routeParams, $location, socket, $rootScope) {
 
@@ -37,10 +69,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 sendJoinRoomRequest($scope.roomId, undefined);
             }
         }
-		
-		$scope.$on('$destroy', function (event) {
-			socket.getSocket().removeAllListeners();
-		});
 
         function sendJoinRoomRequest(roomId, password) {
             socket.emit('joinroom', {
@@ -60,6 +88,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         }
 
         socket.on('updateusers', function(roomId, nicksId, ops) {
+
             if ($scope.roomId === roomId) {
                 $scope.isop = (ops[$scope.nickId] !== undefined);
                 $scope.nicks = nicksId;
@@ -69,7 +98,9 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             }
         });
 
+
         $scope.sendMSG = function() {
+
             if ($scope.submitMessage === '') {
                 //skip empty text
             } else {
@@ -78,7 +109,9 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                     msg: $scope.submitMessage
                 });
             }
+
             $scope.submitMessage = '';
+
         };
 
         $scope.sendPmMSG = function() {
@@ -131,8 +164,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         });
 
         $scope.partRoom = function() {
-<<<<<<< HEAD
-=======
 
             var message = 'has left the room';
 
@@ -140,14 +171,11 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 roomName: $scope.roomId,
                 msg: message
             });
->>>>>>> ca1cbe251ff583d2b71ef1e22bdd5f9434602270
             socket.emit('partroom', $scope.roomId);
+
             $location.path('/rooms/' + $scope.nickId);
-<<<<<<< HEAD
-=======
 
 
->>>>>>> ca1cbe251ff583d2b71ef1e22bdd5f9434602270
         };
 
         socket.on('updatechat', function(roomId, msgHistory) {
@@ -181,6 +209,8 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             }
         });
 
+
+
         $scope.showPmBox = function(nick) {
             if ($scope.nickId === nick) {
                 return;
@@ -209,6 +239,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 room: $scope.roomId,
                 user: nick
             }, function(success) {});
+
         };
 
         socket.on('kicked', function(roomId, nickId, user) {
@@ -219,14 +250,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             }
             if ($scope.nickId === user) {
 
-<<<<<<< HEAD
-                socket.emit('sendmsg', {
-                    roomName: $scope.roomId,
-                    msg: message
-                });
-=======
 
->>>>>>> ca1cbe251ff583d2b71ef1e22bdd5f9434602270
             }
         });
 
@@ -244,6 +268,8 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                     msg: message
                 });
             }
+
+
         });
 
         socket.on('opped', function(roomId, nickId, user) {
@@ -262,6 +288,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         socket.on('deopped', function(roomId, nickId, user) {
             if ($scope.roomId === roomId && $scope.nickId === nickId) {
                 alertify.error('You have been deopped');
+
             }
             if ($scope.nickId === user) {
                 var message = 'has deopped ' + nickId;
@@ -270,9 +297,12 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                     msg: message
                 });
             }
+
+
         });
 
         $scope.changeTopic = function() {
+
             if ($scope.topicToChange === '') {
 
             } else {
@@ -282,9 +312,12 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 });
                 $scope.topicToChange = '';
             }
+
         };
 
         $scope.changePassword = function() {
+
+
             if ($scope.pwToChange === '') {
 
             } else {
@@ -294,7 +327,10 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 });
                 alertify.success('Password changed to: ' + $scope.pwToChange);
                 $scope.pwToChange = '';
+
             }
+
+
         };
 
         $scope.removePassword = function() {
@@ -313,13 +349,10 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             moment.locale("is");
             var date = moment().format('LTS');
             return date;
-        }
+        };
 
 
-<<<<<<< HEAD
-=======
 
->>>>>>> ca1cbe251ff583d2b71ef1e22bdd5f9434602270
         $scope.orders = [{
             value: 'op',
             label: 'Give Op'
@@ -333,5 +366,99 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             value: 'ban',
             label: 'Ban'
         }];
+    }
+]);
+;angular.module("ChatApp").controller("RoomsCtrl", ["$scope", "$http", "$routeParams", "$location", "socket", "$rootScope",
+
+    function($scope, $http, $routeParams, $location, socket, $rootScope) {
+
+        $scope.nickId = $routeParams.nickId;
+
+        $scope.roomId = '';
+        $scope.rooms = [];
+        $scope.errorMessage = '';
+        $scope.create_error = false;
+
+        $scope.newRoom = function() {
+            if ($scope.roomId === '') {
+                $scope.errorMessage = "Please enter room name";
+                $scope.create_error = true;
+            } else if ($scope.rooms[$scope.roomId] !== undefined) {
+                $scope.errorMessage = "The room name " + $scope.roomId + " is already taken";
+                $scope.create_error = true;
+            } else {
+                socket.emit('createroom', {
+                    room: $scope.roomId
+                }, function(success, reason) {
+                    if (success) {
+                        $location.path('/rooms/' + $scope.nickId + '/' + $scope.roomId).search({
+                            locked: false
+                        });
+                    }
+                });
+            }
+        };
+
+        socket.on("roomlist", function(data) {
+            $scope.rooms = data;
+            $scope.roomlist = [];
+            $.each($scope.rooms, function(key, value) {
+                $scope.roomlist.push({
+                    name: key,
+                    locked: value.locked,
+                    size: Object.keys(value.users).length
+                });
+            });
+        });
+
+        socket.emit('rooms');
+
+    }
+]);
+;angular.module('ChatApp', ["ng", "ngRoute", 'luegg.directives']);
+;angular.module("ChatApp").config(function($routeProvider) {
+    $routeProvider.when("/home/login", {
+        templateUrl: "/views/home.html",
+        controller: "HomeCtrl"
+    }).when("/rooms/:nickId", {
+        templateUrl: "/views/rooms.html",
+        controller: "RoomsCtrl",
+    }).when("/rooms/:nickId/:roomId", {
+        templateUrl: "/views/room.html",
+        controller: "RoomCtrl"
+    }).otherwise({
+        redirectTo: "home/login"
+    });
+
+});
+;// Factory to wrap around the socket functions
+// Borrowed from Brian Ford
+// http://briantford.com/blog/angular-socket-io.html
+angular.module("ChatApp").factory('socket', ['$rootScope',
+    function($rootScope) {
+        var socket = io.connect('http://localhost:8080');
+        return {
+            on: function(eventName, callback) {
+                socket.on(eventName, function() {
+                    var args = arguments;
+                    $rootScope.$apply(function() {
+                        callback.apply(socket, args);
+                    });
+                });
+            },
+            emit: function(eventName, data, callback) {
+                socket.emit(eventName, data, function() {
+                    var args = arguments;
+                    $rootScope.$apply(function() {
+                        if (callback) {
+                            callback.apply(socket, args);
+                        }
+                    });
+                });
+            },
+            getSocket: function() {
+                return socket;
+            }
+        };
     }
 ]);

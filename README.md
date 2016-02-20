@@ -5,7 +5,7 @@ Web based chat application with angular.
 * node.js & python version 2.7
 
 ## Installation
-* With node.js installed, run setup script in the rootfolder. 
+* Run setup script in the rootfolder. 
 * Setup script installs all dependencies & dev dependencies for the Chatserver.
 
 ## Running the application

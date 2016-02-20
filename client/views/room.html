@@ -18,6 +18,7 @@
                 <a href="" ng-click="showPmBox(nick)">{{nick}}</a>
                 <select class="opSelect" ng-show="isop" ng-model="orderSelect" ng-options="order.value as order.label for order in orders" ng-change="selectOrders(orderSelect,nick)"> 
                 </select>
+				<span ng-show="pmUnreadFrom[nick]" class="ng-cloak glyphicon glyphicon-envelope pull-right"></span>
             </li>
         </ul>
     </div>

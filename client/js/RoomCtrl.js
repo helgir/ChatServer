@@ -61,6 +61,9 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             if ($scope.roomId === roomId) {
                 $scope.isop = (ops[$scope.nickId] !== undefined);
                 $scope.nicks = nicksId;
+				for(var nick in $scope.nicks) {
+					$scope.pmUnreadFrom[nick] = false;
+				}
             }
         });
 
@@ -75,7 +78,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                     msg: $scope.submitMessage
                 });
             }
-
 
             $scope.submitMessage = '';
 
@@ -111,7 +113,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
 			}
             $scope.pmMessages[username].push({sender: username, message: message});
 			if($scope.nickSelected !== username) {
-				$scope.pmUnreadFrom[nick] += 1;
+				$scope.pmUnreadFrom[username] = true;
 			}
 			if($scope.userSelected === false) {
 				$scope.showPmBox(username);
@@ -147,11 +149,11 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             if ($scope.nickSelected != nick) {
                 $scope.nickSelected = nick;
                 $scope.userSelected = true;
-				$scope.pmUnreadFrom[nick] = 0;
+				$scope.pmUnreadFrom[nick] = false;
             } else {
                 $scope.userSelected = false;
                 $scope.nickSelected = '';
-				$scope.pmUnreadFrom[nick] = 0;
+				$scope.pmUnreadFrom[nick] = false;
             }
         };
 

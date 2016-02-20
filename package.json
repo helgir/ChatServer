@@ -14,7 +14,6 @@
 
   "scripts": {
     "start": "node chatserver.js",
-    "start" : "./start-client",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {},

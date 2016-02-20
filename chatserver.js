@@ -4,7 +4,27 @@ var express = require('express'),
     server = http.createServer(app),
     io = require('socket.io').listen(server); // jshint ignore:line
 
-server.listen(8080);
+server.listen(process.env.PORT ? process.env.PORT : 8080);
+
+app.set('port', (process.env.PORT || 8080));
+
+app.use(express.static(__dirname + '/public'));
+
+// views is directory for all template files
+app.set('views', __dirname + '/client/views');
+app.set('view engine', 'ejs');
+
+app.get('/', function(request, response) {
+  response.render('/index')
+});
+
+app.get('/cool', function(request, response) {
+  response.send(cool());
+});
+
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
 
 //Store room in an object.
 var rooms = {};

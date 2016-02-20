@@ -1,1 +1,1 @@
-bot: node chatserver.js
+web: node chatserver.js

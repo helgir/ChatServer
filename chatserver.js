@@ -129,9 +129,6 @@ io.sockets.on('connection', function(socket) {
         if (rooms[data.roomName].users[socket.username] !== undefined) {
             userAllowed = true;
         }
-        if (rooms[data.roomName].ops[socket.username] !== undefined) {
-            userAllowed = true;
-        }
 
         if (userAllowed) {
             //Update the message history for the room that the user sent the message to.

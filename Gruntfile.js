@@ -34,19 +34,19 @@ module.exports = function(grunt) {
             tasks: ['jshint']
         },
         concat: {
-          options: {
-            separator: ';'
-          },
-          dist: {
-            src: ['client/js/*.js'],
-            dest: 'client/built/concat.js',
-          },
+            options: {
+                separator: ';'
+            },
+            dist: {
+                src: ['client/js/*.js'],
+                dest: 'client/built/concat.js',
+            },
         },
         uglify: {
-          dist: {
-            src: ['client/built/concat.js'],
-            dest: 'client/built/concat.min.js',
-          },
+            dist: {
+                src: ['client/built/concat.js'],
+                dest: 'client/built/concat.min.js',
+            },
         },
         jsbeautifier: {
             files: [

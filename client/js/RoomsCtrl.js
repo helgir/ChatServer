@@ -13,15 +13,17 @@ angular.module("ChatApp").controller("RoomsCtrl", ["$scope", "$http", "$routePar
             if ($scope.roomId === '') {
                 $scope.errorMessage = "Please enter room name";
                 $scope.create_error = true;
-            } else if($scope.rooms[$scope.roomId] !== undefined) {
-				$scope.errorMessage = "The room name " + $scope.roomId + " is already taken";
+            } else if ($scope.rooms[$scope.roomId] !== undefined) {
+                $scope.errorMessage = "The room name " + $scope.roomId + " is already taken";
                 $scope.create_error = true;
-			} else {
+            } else {
                 socket.emit('createroom', {
                     room: $scope.roomId
-				}, function(success, reason) {
+                }, function(success, reason) {
                     if (success) {
-                        $location.path('/rooms/' + $scope.nickId + '/' + $scope.roomId).search({locked: false});
+                        $location.path('/rooms/' + $scope.nickId + '/' + $scope.roomId).search({
+                            locked: false
+                        });
                     }
                 });
             }

@@ -1,12 +1,17 @@
 {
   "name": "ChatServer",
   "version": "1.0.0",
+  "dependencies": {
+    "express": "3.1.0",
+    "socket.io": "0.9.13"
+  },
   "description": " ",
   "main": "Gruntfile.js",
   "engines": {
     "node" : "5.x.x",
     "npm" : "3.x.x"
-  }
+  },
+
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

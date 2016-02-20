@@ -10,24 +10,17 @@
                 <span>{{message.timestamp}} {{message.nick}}: {{message.message}} </span>
             </li>
         </ul>
-
-
-
     </div>
-
     <div id="rightcolumn">
         <h2> Users </h2>
         <ul class="list-group-list list-group-horizontal" id="users">
             <li class="userlist-unstyled" ng-repeat="nick in nicks">
                 <a href="" ng-click="showPmBox(nick)">{{nick}}</a>
-
                 <select class="opSelect" ng-show="isop" ng-model="orderSelect" ng-options="order.value as order.label for order in orders" ng-change="selectOrders(orderSelect,nick)"> 
-         </select>
+                </select>
             </li>
-
         </ul>
     </div>
-
     <div class="pmBox" ng-show="userSelected">
         <div class="pmBoxTop">
             <div class="pmBoxHead" scroll-glue>
@@ -38,26 +31,19 @@
                     <span>{{message.timestamp}} {{message.nick}} > {{ message.message}} </span>
                 </li>
             </ul>
-
-
         </div>
-
         <div class="pmBoxBottom">
             <form ng-submit="sendPmMSG()">
                 <button type="submit" class="btn btn-default" ng-click="sendPmMSG()">Submit</button>
                 <input class="submitBox_pm" type="text" ng-model="pmSubmitMessage" placeholder=""></input>
             </form>
         </div>
-
     </div>
-
-
     <div class="messageBox">
         <form ng-submit="sendMSG()">
             <button type="submit" class="btn btn-default" ng-click="sendMSG()">Submit</button>
             <input class="submitBox " type="text" ng-model="submitMessage" placeholder=""></input>
         </form>
-
     </div>
     <div ng-show="isop" class="operatorCtrl">
         <form ng-submit="changeTopic()">
@@ -69,8 +55,5 @@
             <input type="text" ng-model="pwToChange" placeholder="Change Password"></input>
             <button ng-click="removePassword()" class="btn btn-default"> Remove Password</button>
         </form>
-
     </div>
-
-
 </div>

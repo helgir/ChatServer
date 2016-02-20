@@ -120,9 +120,16 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
 
         $scope.partRoom = function() {
 
+            var message = 'has left the room';
+            
+                socket.emit('sendmsg', {
+                    roomName: $scope.roomId,
+                    msg: message
+                });
             socket.emit('partroom', $scope.roomId);
 
             $location.path('/rooms/' + $scope.nickId);
+
 
         };
 
@@ -202,7 +209,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         socket.on('banned', function(roomId, nickId, user) {
             if ($scope.roomId === roomId && $scope.nickId === nickId) {
                 $location.path('/rooms/' + $scope.nickId);
-                $scope.roomId = '';
+                //$scope.roomId = '';
                 alertify.error('You have been banned from ' + roomId, 0);
             }
             if ($scope.nickId === user) {

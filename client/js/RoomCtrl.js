@@ -1,6 +1,5 @@
 angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routeParams", "$location", "socket", "$rootScope",
 
-
     function($scope, $http, $routeParams, $location, socket, $rootScope) {
 
         $scope.roomId = $routeParams.roomId;
@@ -38,6 +37,10 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 sendJoinRoomRequest($scope.roomId, undefined);
             }
         }
+		
+		$scope.$on('$destroy', function (event) {
+			socket.getSocket().removeAllListeners();
+		});
 
         function sendJoinRoomRequest(roomId, password) {
             socket.emit('joinroom', {
@@ -57,7 +60,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         }
 
         socket.on('updateusers', function(roomId, nicksId, ops) {
-
             if ($scope.roomId === roomId) {
                 $scope.isop = (ops[$scope.nickId] !== undefined);
                 $scope.nicks = nicksId;
@@ -67,9 +69,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             }
         });
 
-
         $scope.sendMSG = function() {
-
             if ($scope.submitMessage === '') {
                 //skip empty text
             } else {
@@ -78,9 +78,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                     msg: $scope.submitMessage
                 });
             }
-
             $scope.submitMessage = '';
-
         };
 
         $scope.sendPmMSG = function() {
@@ -119,11 +117,8 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
          });
 
         $scope.partRoom = function() {
-
             socket.emit('partroom', $scope.roomId);
-
             $location.path('/rooms/' + $scope.nickId);
-
         };
 
         socket.on('updatechat', function(roomId, msgHistory) {
@@ -157,8 +152,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             }
         });
 
-
-
         $scope.showPmBox = function(nick) {
             if ($scope.nickId === nick) {
                 return;
@@ -179,7 +172,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 room: $scope.roomId,
                 user: nick
             }, function(success) {});
-
         };
 
         socket.on('kicked', function(roomId, nickId, user) {
@@ -195,7 +187,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                     roomName: $scope.roomId,
                     msg: message
                 });
-
             }
         });
 
@@ -213,8 +204,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                     msg: message
                 });
             }
-
-
         });
 
         socket.on('opped', function(roomId, nickId, user) {
@@ -233,7 +222,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         socket.on('deopped', function(roomId, nickId, user) {
             if ($scope.roomId === roomId && $scope.nickId === nickId) {
                 alertify.error('You have been deopped');
-
             }
             if ($scope.nickId === user) {
                 var message = 'has deopped ' + nickId;
@@ -242,12 +230,9 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                     msg: message
                 });
             }
-
-
         });
 
         $scope.changeTopic = function() {
-
             if ($scope.topicToChange === '') {
 
             } else {
@@ -257,12 +242,9 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 });
                 $scope.topicToChange = '';
             }
-
         };
 
         $scope.changePassword = function() {
-
-
             if ($scope.pwToChange === '') {
 
             } else {
@@ -272,10 +254,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 });
                 alertify.success('Password changed to: ' + $scope.pwToChange);
                 $scope.pwToChange = '';
-
             }
-
-
         };
 
         $scope.removePassword = function() {
@@ -295,8 +274,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             var date = moment().format('LTS');
             return date;
         };
-
-       
 
         $scope.orders = [{
             value: 'op',

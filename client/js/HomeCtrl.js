@@ -7,6 +7,9 @@ angular.module("ChatApp").controller("HomeCtrl", ["$scope", "$http", "$location"
         $scope.errorMessage = '';
         $scope.login_error = false;
 
+		$scope.$on('$destroy', function (event) {
+			socket.getSocket().removeAllListeners();
+		});
 
         $scope.login = function() {
             if ($scope.nickId === '') {
@@ -15,7 +18,6 @@ angular.module("ChatApp").controller("HomeCtrl", ["$scope", "$http", "$location"
                 $scope.errorMessage = 'Please enter nickname';
                 return;
             }
-
             socket.emit("adduser", $scope.nickId, function(available) {
                 if (available) {
                     $scope.loggedIn = true;

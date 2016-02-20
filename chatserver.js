@@ -4,11 +4,7 @@ var express = require('express'),
     server = http.createServer(app),
     io = require('socket.io').listen(server); // jshint ignore:line
 
-port = process.env.PORT || 8080;
-
-app.use(express.static(__dirname + "/"))
-
-server.listen(port);
+server.listen(8080);
 
 //Store room in an object.
 var rooms = {};
@@ -40,9 +36,9 @@ io.sockets.on('connection', function(socket) {
             fn(false); // Callback, it wasn't available
         }
     });
-	
-	socket.on('createroom', function(joinObj, fn) {
-		var room = joinObj.room;
+
+    socket.on('createroom', function(joinObj, fn) {
+        var room = joinObj.room;
         var pass = joinObj.pass;
 
         //If the room does not exist
@@ -67,8 +63,8 @@ io.sockets.on('connection', function(socket) {
             io.sockets.emit('servermessage', "join", room, socket.username);
             io.sockets.emit('roomlist', rooms);
         }
-		fn(false, "room name taken");
-	});
+        fn(false, "room name taken");
+    });
 
     //When a user joins a room this processes the request.
     socket.on('joinroom', function(joinObj, fn) {
@@ -117,7 +113,7 @@ io.sockets.on('connection', function(socket) {
             }
             fn(false, reason);
         }
-		fn(false, "room does not exist");
+        fn(false, "room does not exist");
     });
 
     // when the client emits 'sendchat', this listens and executes
@@ -159,14 +155,14 @@ io.sockets.on('connection', function(socket) {
         //remove the user from the room roster and room op roster.
         if (rooms[room] !== undefined) {
             delete rooms[room].users[socket.username];
-			//Remove the channel from the user object in the global user roster.
-			if (users[socket.username] !== undefined) {
-				delete users[socket.username].channels[room];
-			}
-			//Update the userlist in the room.
-			io.sockets.emit('updateusers', room, rooms[room].users, rooms[room].ops);
-			io.sockets.emit('servermessage', "part", room, socket.username);
-		}
+            //Remove the channel from the user object in the global user roster.
+            if (users[socket.username] !== undefined) {
+                delete users[socket.username].channels[room];
+            }
+            //Update the userlist in the room.
+            io.sockets.emit('updateusers', room, rooms[room].users, rooms[room].ops);
+            io.sockets.emit('servermessage', "part", room, socket.username);
+        }
     });
 
     // when the user disconnects.. perform this

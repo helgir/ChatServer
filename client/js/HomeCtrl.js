@@ -9,15 +9,15 @@ angular.module("ChatApp").controller("HomeCtrl", ["$scope", "$http", "$location"
 
 
         $scope.login = function() {
-			if ($scope.nickId === '') {
+            if ($scope.nickId === '') {
                 $scope.loggedIn = false;
                 $scope.login_error = true;
                 $scope.errorMessage = 'Please enter nickname';
-				return;
-            } 
-		
+                return;
+            }
+
             socket.emit("adduser", $scope.nickId, function(available) {
-				if (available) {
+                if (available) {
                     $scope.loggedIn = true;
                     $location.path('/rooms/' + $scope.nickId);
                 } else {

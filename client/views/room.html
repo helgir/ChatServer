@@ -26,15 +26,15 @@
             <div class="pmBoxHead" scroll-glue>
                 Send pm to : {{nickSelected}}
             </div>
-            <ul ng-repeat="message in pmMessages">
+            <ul ng-repeat="message in pmMessages[nickSelected]">
                 <li>
-                    <span>{{message.timestamp}} {{message.nick}} > {{ message.message}} </span>
+                    <span>{{message.timestamp}} {{message.sender}} > {{ message.message}} </span>
                 </li>
             </ul>
         </div>
         <div class="pmBoxBottom">
             <form ng-submit="sendPmMSG()">
-                <button type="submit" class="btn btn-default" ng-click="sendPmMSG()">Submit</button>
+                <button type="submit" class="btn btn-default">Submit</button>
                 <input class="submitBox_pm" type="text" ng-model="pmSubmitMessage" placeholder=""></input>
             </form>
         </div>

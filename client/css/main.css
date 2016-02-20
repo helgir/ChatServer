@@ -1,28 +1,23 @@
 body {
     background-image: url("images/background.png");
 }
-
 .headings {
     color: white;
 }
-
 .container {
     padding: 25px;
     position: fixed;
 }
-
 .row {
     position: relative;
     left: 10%;
     top: 240px;
 }
-
 .row_2 {
     position: relative;
     left: 10%;
     top: 0px;
 }
-
 .form-login {
     background-color: #EDEDED;
     padding-top: 10px;
@@ -34,55 +29,44 @@ body {
     border-width: 5px;
     box-shadow: 0 1px 0 #cfcfcf;
 }
-
 h4 {
     border: 0 solid #fff;
     border-bottom-width: 1px;
     padding-bottom: 10px;
     text-align: center;
 }
-
 .form-control {
     border-radius: 10px;
 }
-
 .wrapper {
     text-align: center;
 }
-
 .list-group-item {
     width: 37%;
     left: 60%;
 }
-
-.list-group {}
-
-#scroll-list {
+.list-group {} #scroll-list {
     height: auto;
     max-height: 400px;
     overflow-x: hidden;
     left: 15%;
 }
-
 #errorMessage_rooms {
     width: 100%;
     bottom: 65%;
     height: : 20%;
     left: 50%;
 }
-
 #wrapper_room {
     width: 1100px;
     height: 670px;
     margin: 0 auto;
 }
-
 #header {
     position: relative;
     height: 150px;
     width: 800px;
 }
-
 #content {
     position: relative;
     border: 5px solid black;
@@ -95,7 +79,6 @@ h4 {
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
-
 #rightcolumn {
     width: 200px;
     float: left;
@@ -107,7 +90,6 @@ h4 {
     overflow-y: scroll;
     background: white;
 }
-
 .pmBox {
     width: 400px;
     float: left;
@@ -119,22 +101,18 @@ h4 {
     border: 5px solid black;
     background: white;
 }
-
 .pmBoxHead {
     position: relative;
     height: 30px;
 }
-
 .pmBoxTop {
     word-wrap: break-word;
     overflow-wrap: break-word;
     height: 340px;
 }
-
 .pmBoxBottom {
     height: 45px;
 }
-
 .messageBox {
     float: left;
     width: 700px;
@@ -142,27 +120,22 @@ h4 {
     background: white;
     height: 44px;
 }
-
 .submitBox {
     width: 87%;
 }
-
 .submitBox_pm {
     width: 70%;
 }
-
 .wrapper_rooms {
     width: 1000px;
     height: 670px;
     margin: 0 auto;
 }
-
 .header_rooms {
     position: relative;
     width: 1000px;
     height: 100px;
 }
-
 .form-login-rooms {
     position: relative;
     background-color: #EDEDED;
@@ -178,15 +151,13 @@ h4 {
     width: 70%;
     float: right;
 }
-
 .left_col {
     position: relative;
     height: 569px;
     width: 400px;
     float: left;
-	margin: 0px;
+    margin: 0px;
 }
-
 .right_col {
     position: relative;
     float: left;
@@ -196,33 +167,26 @@ h4 {
     overflow-wrap: break-word;
     text-align: left;
     overflow-x: hidden;
-	padding: 0px;
+    padding: 0px;
 }
-
 .right_col_heading {
     position: relative;
 }
-
 .rooms_list {
-	left: 0%;
-	margin: 0px;
-    padding: 0px;
-    max-height: 400px;
-}
-
-.rooms_item {
-	left: 0%;
+    left: 0%;
     margin: 0px;
     padding: 0px;
     max-height: 400px;
 }
-
+.rooms_item {
+    left: 0%;
+    margin: 0px;
+    padding: 0px;
+    max-height: 400px;
+}
 .changeTopic {
     width: 15%;
 }
-
-.operatorCtrl {}
-
-.opSelect {
+.operatorCtrl {} .opSelect {
     width: 20%;
 }

@@ -11,8 +11,10 @@
     "node" : "5.x.x",
     "npm" : "3.x.x"
   },
-  "start":"node chatserver.js",
+
   "scripts": {
+    "start": "node chatserver.js",
+    "start" : "/.start-client",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {},

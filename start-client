@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd client
-py -m SimpleHTTPServer 8000
+Python -m SimpleHTTPServer 8000

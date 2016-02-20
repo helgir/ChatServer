@@ -94,7 +94,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
 						if($scope.pmMessages[$scope.nickSelected] === undefined) {
 							$scope.pmMessages[$scope.nickSelected] = [];
 						}
-						$scope.pmMessages[$scope.nickSelected].push({sender: $scope.nickId, message: $scope.pmSubmitMessage});
+						$scope.pmMessages[$scope.nickSelected].push({sender: $scope.nickId, message: $scope.pmSubmitMessage, timestamp: currentTime()});
 						$scope.pmSubmitMessage = '';
 					} else {
 						if($scope.pmMessages[$scope.nickSelected] === undefined) {
@@ -111,7 +111,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
 			if($scope.pmMessages[username] === undefined) {
 				$scope.pmMessages[username] = [];
 			}
-            $scope.pmMessages[username].push({sender: username, message: message});
+            $scope.pmMessages[username].push({sender: username, message: message, timestamp: currentTime()});
 			if($scope.nickSelected !== username) {
 				$scope.pmUnreadFrom[username] = true;
 			}
@@ -273,9 +273,13 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             });
         };
 
-        moment.locale("is");
-        var date = moment().format('LTS');
-        $scope.changedTime = date;
+        function currentTime() {
+            moment.locale("is");
+            var date = moment().format('LTS');
+            return date;
+        };
+
+       
 
         $scope.orders = [{
             value: 'op',

@@ -6,6 +6,8 @@ var express = require('express'),
 
 server.listen(process.env.PORT ? process.env.PORT : 8080);
 
+app.set('port', (process.env.PORT || 8080));
+app.use(express.static(__dirname + '/'));
 //Store room in an object.
 var rooms = {};
 //Global user object, since we want to know what rooms each user is in etc.

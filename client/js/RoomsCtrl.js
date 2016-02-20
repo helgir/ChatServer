@@ -30,7 +30,7 @@ angular.module("ChatApp").controller("RoomsCtrl", ["$scope", "$http", "$routePar
             $.each($scope.rooms, function(key, value) {
                 $scope.roomlist.push({
                     name: key,
-					locked: value.locked,
+                    locked: value.locked,
                     size: Object.keys(value.users).length
                 });
             });

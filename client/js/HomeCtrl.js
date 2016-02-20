@@ -7,9 +7,9 @@ angular.module("ChatApp").controller("HomeCtrl", ["$scope", "$http", "$location"
         $scope.errorMessage = '';
         $scope.login_error = false;
 
-		$scope.$on('$destroy', function (event) {
-			socket.getSocket().removeAllListeners();
-		});
+        $scope.$on('$destroy', function(event) {
+            socket.getSocket().removeAllListeners();
+        });
 
         $scope.login = function() {
             if ($scope.nickId === '') {

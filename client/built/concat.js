@@ -28,8 +28,8 @@ angular.module("ChatApp").controller("HomeCtrl", ["$scope", "$http", "$location"
             });
         };
     }
-]);
-;angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routeParams", "$location", "socket", "$rootScope",
+]);;
+angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routeParams", "$location", "socket", "$rootScope",
 
 
     function($scope, $http, $routeParams, $location, socket, $rootScope) {
@@ -367,8 +367,8 @@ angular.module("ChatApp").controller("HomeCtrl", ["$scope", "$http", "$location"
             label: 'Ban'
         }];
     }
-]);
-;angular.module("ChatApp").controller("RoomsCtrl", ["$scope", "$http", "$routeParams", "$location", "socket", "$rootScope",
+]);;
+angular.module("ChatApp").controller("RoomsCtrl", ["$scope", "$http", "$routeParams", "$location", "socket", "$rootScope",
 
     function($scope, $http, $routeParams, $location, socket, $rootScope) {
 
@@ -414,9 +414,9 @@ angular.module("ChatApp").controller("HomeCtrl", ["$scope", "$http", "$location"
         socket.emit('rooms');
 
     }
-]);
-;angular.module('ChatApp', ["ng", "ngRoute", 'luegg.directives']);
-;angular.module("ChatApp").config(function($routeProvider) {
+]);;
+angular.module('ChatApp', ["ng", "ngRoute", 'luegg.directives']);;
+angular.module("ChatApp").config(function($routeProvider) {
     $routeProvider.when("/home/login", {
         templateUrl: "/views/home.html",
         controller: "HomeCtrl"
@@ -430,8 +430,7 @@ angular.module("ChatApp").controller("HomeCtrl", ["$scope", "$http", "$location"
         redirectTo: "home/login"
     });
 
-});
-;// Factory to wrap around the socket functions
+});; // Factory to wrap around the socket functions
 // Borrowed from Brian Ford
 // http://briantford.com/blog/angular-socket-io.html
 angular.module("ChatApp").factory('socket', ['$rootScope',

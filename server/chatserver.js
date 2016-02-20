@@ -323,7 +323,7 @@ function Room() {
 
     this.addUser = function(user) {
         if (user !== undefined) {
-			this.users[user] = user;
+            this.users[user] = user;
         } else {
             console.log("ERROR: add user");
         }

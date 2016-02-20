@@ -8,10 +8,10 @@ angular.module("ChatApp").controller("RoomsCtrl", ["$scope", "$http", "$routePar
         $scope.rooms = [];
         $scope.errorMessage = '';
         $scope.create_error = false;
-		
-		$scope.$on('$destroy', function (event) {
-			socket.getSocket().removeAllListeners();
-		});
+
+        $scope.$on('$destroy', function(event) {
+            socket.getSocket().removeAllListeners();
+        });
 
         $scope.newRoom = function() {
             if ($scope.roomId === '') {

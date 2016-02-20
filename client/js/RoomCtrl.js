@@ -182,6 +182,14 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         };
 
         $scope.selectOrders = function(value, nick) {
+            if(value === 'kick') {
+             var message = 'has kicked ' + nick;
+
+                socket.emit('sendmsg', {
+                    roomName: $scope.roomId,
+                    msg: message
+                });
+            }
             socket.emit(value, {
                 room: $scope.roomId,
                 user: nick
@@ -192,16 +200,11 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         socket.on('kicked', function(roomId, nickId, user) {
             if ($scope.roomId === roomId && $scope.nickId === nickId) {
                 $location.path('/rooms/' + $scope.nickId);
-                //$scope.roomId = '';
+                $scope.roomId = '';
                 alertify.error('You have been kicked from ' + roomId);
             }
             if ($scope.nickId === user) {
-                var message = 'has kicked ' + nickId;
 
-                socket.emit('sendmsg', {
-                    roomName: $scope.roomId,
-                    msg: message
-                });
 
             }
         });

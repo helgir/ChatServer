@@ -81,12 +81,34 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         };
 
         $scope.sendPmMSG = function() {
-
-            if ($scope.pmSubmitMessage === '') {
-                //skip empty text
-            } else {}
+            if($scope.pmSubmitMessage  === '') {
+                // Do nothing.
+            }
+            else {
+                console.log($scope.pmSubmitMessage);
+                socket.emit('privatemsg', { nick: $scope.nickSelected, message: $scope.pmSubmitMessage }, function (success) {});
+                 var pm = {
+                        sender : $scope.nickId,
+                        message : $scope.pmSubmitMessage,
+                        receiver : $scope.nickSelected
+                };
+                $scope.pmMessages.push(pm);
+                $scope.pmSubmitMessage = '';
+                  
+            }
 
         };
+
+        socket.on('recv_privatemsg', function(username, message) {
+            
+                var pm = {
+                        sender : username,
+                        message : message,
+                        receiver : $scope.nickId
+                };
+                $scope.pmMessages.push(pm);
+
+         });
 
         $scope.partRoom = function() {
 

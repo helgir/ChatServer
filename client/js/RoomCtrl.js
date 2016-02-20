@@ -37,10 +37,10 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 sendJoinRoomRequest($scope.roomId, undefined);
             }
         }
-		
-		$scope.$on('$destroy', function (event) {
-			socket.getSocket().removeAllListeners();
-		});
+
+        $scope.$on('$destroy', function(event) {
+            socket.getSocket().removeAllListeners();
+        });
 
         function sendJoinRoomRequest(roomId, password) {
             socket.emit('joinroom', {

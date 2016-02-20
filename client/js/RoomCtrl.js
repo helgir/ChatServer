@@ -131,23 +131,13 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         });
 
         $scope.partRoom = function() {
-<<<<<<< HEAD
-=======
-
             var message = 'has left the room';
-
             socket.emit('sendmsg', {
                 roomName: $scope.roomId,
                 msg: message
             });
->>>>>>> ca1cbe251ff583d2b71ef1e22bdd5f9434602270
             socket.emit('partroom', $scope.roomId);
             $location.path('/rooms/' + $scope.nickId);
-<<<<<<< HEAD
-=======
-
-
->>>>>>> ca1cbe251ff583d2b71ef1e22bdd5f9434602270
         };
 
         socket.on('updatechat', function(roomId, msgHistory) {
@@ -216,17 +206,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 $location.path('/rooms/' + $scope.nickId);
                 $scope.roomId = '';
                 alertify.error('You have been kicked from ' + roomId);
-            }
-            if ($scope.nickId === user) {
-
-<<<<<<< HEAD
-                socket.emit('sendmsg', {
-                    roomName: $scope.roomId,
-                    msg: message
-                });
-=======
-
->>>>>>> ca1cbe251ff583d2b71ef1e22bdd5f9434602270
             }
         });
 
@@ -315,11 +294,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             return date;
         }
 
-
-<<<<<<< HEAD
-=======
-
->>>>>>> ca1cbe251ff583d2b71ef1e22bdd5f9434602270
         $scope.orders = [{
             value: 'op',
             label: 'Give Op'

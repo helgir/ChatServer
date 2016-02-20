@@ -100,7 +100,7 @@ io.sockets.on('connection', function(socket) {
                 //We need to let the server know beforehand so that he starts to prepare the client template.
                 fn(true, undefined);
                 //Add user to room.
-                rooms[room].addUser(socket.username);
+				rooms[room].addUser(socket.username);
                 //Keep track of the room in the user object.
                 if (users[socket.username] !== undefined) {
                     users[socket.username].channels[room] = room;
@@ -122,7 +122,7 @@ io.sockets.on('connection', function(socket) {
         var userAllowed = false;
 
         //Check if user is allowed to send message.
-        if (rooms[data.roomName].users[socket.username] !== undefined) {
+        if (rooms[data.roomName] !== undefined && rooms[data.roomName].users[socket.username] !== undefined) {
             userAllowed = true;
         }
 
@@ -225,8 +225,6 @@ io.sockets.on('connection', function(socket) {
         if (rooms[deopObj.room] !== undefined && rooms[deopObj.room].ops[socket.username] !== undefined) {
             //Remove the user from the room op roster.
             delete rooms[deopObj.room].ops[deopObj.user];
-            //Add the user to the room roster.
-            rooms[deopObj.room].users[deopObj.user] = deopObj.user;
             //Broadcast to the room who got opped.
             io.sockets.emit('deopped', deopObj.room, deopObj.user, socket.username);
             //Update user list for room.
@@ -325,7 +323,9 @@ function Room() {
 
     this.addUser = function(user) {
         if (user !== undefined) {
-            this.users[user] = user;
+			if(this.users[user] === undefined) {
+				this.users[user] = user;
+			}
         } else {
             console.log("ERROR: add user");
         }

@@ -1,7 +1,8 @@
 #!/bin/bash
 
-npm install;
-
+npm install
+sudo npm install -g grunt-cli
+sudo npm install -g bower
 (cd client && bower install);
 
 exit 0;

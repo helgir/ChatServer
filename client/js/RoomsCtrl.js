@@ -21,7 +21,7 @@ angular.module("ChatApp").controller("RoomsCtrl", ["$scope", "$http", "$routePar
                     room: $scope.roomId
 				}, function(success, reason) {
                     if (success) {
-                        $location.path('/rooms/' + $scope.nickId + '/' + $scope.roomId + "?locked=false");
+                        $location.path('/rooms/' + $scope.nickId + '/' + $scope.roomId).search({locked: false});
                     }
                 });
             }

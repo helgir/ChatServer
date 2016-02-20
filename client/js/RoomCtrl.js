@@ -20,44 +20,40 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         $scope.glued = true;
 
         joinRoom();
-
-        function joinRoom() {
-            var password;
-            if ($routeParams.locked === 'true') {
-                password = askForPassword();
-            }
+		
+		function joinRoom() {
+			if($routeParams.locked == 'true') {
+				alertify.set({
+					labels: {
+						ok: "Join",
+						cancel: "Cancel"
+					}
+				});
+				alertify.prompt("Password: ",
+					function(evt, value){
+						sendJoinRoomRequest($scope.roomId, value);
+					});
+			} else {
+				sendJoinRoomRequest($scope.roomId, undefined);
+			}
+		}
+		
+		function sendJoinRoomRequest(roomId, password) {
             socket.emit('joinroom', {
-                room: $scope.roomId,
+                room: roomId,
                 pass: password
             }, function(success, reason) {
-                console.log(reason);
                 if (!success) {
                     if (reason === 'banned') {
                         $location.path('/rooms/' + $scope.nickId);
                         alertify.alert("You are banned from this room");
                     } else if (reason === "wrong password") {
+						$location.path('/rooms/' + $scope.nickId);
                         alertify.alert("Wrong password!");
-                        joinRoom();
                     }
                 }
             });
-        }
-
-        function askForPassword() {
-            alertify.set({
-                labels: {
-                    ok: "Join",
-                    cancel: "Cancel"
-                }
-            });
-            alertify.prompt('Please enter password').set('onok', function(successEvent, password) {
-                console.log(password);
-                return password;
-            }).set('oncancel', function(cancelEvent) {
-                this.close();
-                $location.path('/rooms/' + $scope.nickId);
-            }).set('type', 'text');
-        }
+		}
 
         socket.on('updateusers', function(roomId, nicksId, ops) {
 

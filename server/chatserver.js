@@ -323,13 +323,7 @@ function Room() {
 
     this.addUser = function(user) {
         if (user !== undefined) {
-<<<<<<< HEAD:chatserver.js
 			this.users[user] = user;
-=======
-            if (this.users[user] === undefined) {
-                this.users[user] = user;
-            }
->>>>>>> ca1cbe251ff583d2b71ef1e22bdd5f9434602270:server/chatserver.js
         } else {
             console.log("ERROR: add user");
         }

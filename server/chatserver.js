@@ -100,7 +100,7 @@ io.sockets.on('connection', function(socket) {
                 //We need to let the server know beforehand so that he starts to prepare the client template.
                 fn(true, undefined);
                 //Add user to room.
-				rooms[room].addUser(socket.username);
+                rooms[room].addUser(socket.username);
                 //Keep track of the room in the user object.
                 if (users[socket.username] !== undefined) {
                     users[socket.username].channels[room] = room;
@@ -323,9 +323,9 @@ function Room() {
 
     this.addUser = function(user) {
         if (user !== undefined) {
-			if(this.users[user] === undefined) {
-				this.users[user] = user;
-			}
+            if (this.users[user] === undefined) {
+                this.users[user] = user;
+            }
         } else {
             console.log("ERROR: add user");
         }

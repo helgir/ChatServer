@@ -1,4 +1,35 @@
-angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routeParams", "$location", "socket", "$rootScope",
+angular.module("ChatApp").controller("HomeCtrl", ["$scope", "$http", "$location", "socket", "$rootScope",
+    function($scope, $http, $location, socket, $rootScope) {
+
+
+        $scope.nickId = '';
+        $scope.loggedIn = false;
+        $scope.errorMessage = '';
+        $scope.login_error = false;
+
+
+        $scope.login = function() {
+            if ($scope.nickId === '') {
+                $scope.loggedIn = false;
+                $scope.login_error = true;
+                $scope.errorMessage = 'Please enter nickname';
+                return;
+            }
+
+            socket.emit("adduser", $scope.nickId, function(available) {
+                if (available) {
+                    $scope.loggedIn = true;
+                    $location.path('/rooms/' + $scope.nickId);
+                } else {
+                    $scope.loggedIn = false;
+                    $scope.login_error = true;
+                    $scope.errorMessage = 'This nickname is unavailable';
+                }
+            });
+        };
+    }
+]);
+;angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routeParams", "$location", "socket", "$rootScope",
 
 
     function($scope, $http, $routeParams, $location, socket, $rootScope) {
@@ -318,7 +349,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             moment.locale("is");
             var date = moment().format('LTS');
             return date;
-        }
+        };
 
 
 
@@ -335,5 +366,99 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             value: 'ban',
             label: 'Ban'
         }];
+    }
+]);
+;angular.module("ChatApp").controller("RoomsCtrl", ["$scope", "$http", "$routeParams", "$location", "socket", "$rootScope",
+
+    function($scope, $http, $routeParams, $location, socket, $rootScope) {
+
+        $scope.nickId = $routeParams.nickId;
+
+        $scope.roomId = '';
+        $scope.rooms = [];
+        $scope.errorMessage = '';
+        $scope.create_error = false;
+
+        $scope.newRoom = function() {
+            if ($scope.roomId === '') {
+                $scope.errorMessage = "Please enter room name";
+                $scope.create_error = true;
+            } else if ($scope.rooms[$scope.roomId] !== undefined) {
+                $scope.errorMessage = "The room name " + $scope.roomId + " is already taken";
+                $scope.create_error = true;
+            } else {
+                socket.emit('createroom', {
+                    room: $scope.roomId
+                }, function(success, reason) {
+                    if (success) {
+                        $location.path('/rooms/' + $scope.nickId + '/' + $scope.roomId).search({
+                            locked: false
+                        });
+                    }
+                });
+            }
+        };
+
+        socket.on("roomlist", function(data) {
+            $scope.rooms = data;
+            $scope.roomlist = [];
+            $.each($scope.rooms, function(key, value) {
+                $scope.roomlist.push({
+                    name: key,
+                    locked: value.locked,
+                    size: Object.keys(value.users).length
+                });
+            });
+        });
+
+        socket.emit('rooms');
+
+    }
+]);
+;angular.module('ChatApp', ["ng", "ngRoute", 'luegg.directives']);
+;angular.module("ChatApp").config(function($routeProvider) {
+    $routeProvider.when("/home/login", {
+        templateUrl: "/views/home.html",
+        controller: "HomeCtrl"
+    }).when("/rooms/:nickId", {
+        templateUrl: "/views/rooms.html",
+        controller: "RoomsCtrl",
+    }).when("/rooms/:nickId/:roomId", {
+        templateUrl: "/views/room.html",
+        controller: "RoomCtrl"
+    }).otherwise({
+        redirectTo: "home/login"
+    });
+
+});
+;// Factory to wrap around the socket functions
+// Borrowed from Brian Ford
+// http://briantford.com/blog/angular-socket-io.html
+angular.module("ChatApp").factory('socket', ['$rootScope',
+    function($rootScope) {
+        var socket = io.connect('http://localhost:8080');
+        return {
+            on: function(eventName, callback) {
+                socket.on(eventName, function() {
+                    var args = arguments;
+                    $rootScope.$apply(function() {
+                        callback.apply(socket, args);
+                    });
+                });
+            },
+            emit: function(eventName, data, callback) {
+                socket.emit(eventName, data, function() {
+                    var args = arguments;
+                    $rootScope.$apply(function() {
+                        if (callback) {
+                            callback.apply(socket, args);
+                        }
+                    });
+                });
+            },
+            getSocket: function() {
+                return socket;
+            }
+        };
     }
 ]);

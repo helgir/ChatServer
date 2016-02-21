@@ -28,10 +28,10 @@
         <ul class="list-group-list list-group-horizontal user-list" id="users">
             <li class="userlist-unstyled list-unstyled user-list-item" ng-repeat="nick in nicks">
                 <a href="" ng-click="showPmBox(nick)" class="user-list-item-name">{{nick}}</a>
-                <a href="" ng-show="isop" ng-click="banUser(nick)"> <span class="ng-cloak glyphicon glyphicon-ban-circle pull-right userOperation"></span> </a>
-                <a href="" ng-show="isop" ng-click="kickUser(nick)"> <span class="ng-cloak glyphicon glyphicon-remove-circle pull-right userOperation"></span> </a>
-                <a href="" ng-show="isop" ng-click="deopUser(nick)"> <span class="ng-cloak glyphicon glyphicon-pawn pull-right userOperation"></span> </a>
-                <a href="" ng-show="isop" ng-click="opUser(nick)"> <span class="ng-cloak glyphicon glyphicon-king pull-right userOperation"></span> </a>
+                <a href="" ng-show="isop" ng-click="banUser(nick)" class="atooltip" title="Ban"> <span class="ng-cloak glyphicon glyphicon-ban-circle pull-right userOperation"></span> </a>
+                <a href="" ng-show="isop" ng-click="kickUser(nick)" class="atooltip" title="Kick"> <span class="ng-cloak glyphicon glyphicon-remove-circle pull-right userOperation"></span> </a>
+                <a href="" ng-show="isop" ng-click="deopUser(nick)" class="atooltip" title="Deop"> <span class="ng-cloak glyphicon glyphicon-pawn pull-right userOperation"></span> </a>
+                <a href="" ng-show="isop" ng-click="opUser(nick)"class="atooltip" title="Give Op" > <span class="ng-cloak glyphicon glyphicon-king pull-right userOperation"></span> </a>
                 <a href="" ng-show="pmUnreadFrom[nick]" ng-click="showPmBox(nick)"> <span class="ng-cloak glyphicon glyphicon-comment pull-right userOperation"></span></a>
             </li>
         </ul>

@@ -292,7 +292,6 @@ io.sockets.on('connection', function(socket) {
 
     //Password locks the room.
     socket.on('setpassword', function(passwordObj, fn) {
-
         //If user is OP
         if (rooms[passwordObj.room] !== undefined && rooms[passwordObj.room].ops[socket.username] !== undefined) {
             rooms[passwordObj.room].setPassword(passwordObj.password);

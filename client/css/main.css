@@ -79,7 +79,7 @@ h4 {
 
 #header {
     position: relative;
-    height: 150px;
+    height: 90px;
     width: 800px;
 }
 
@@ -223,8 +223,20 @@ h4 {
     width: 15%;
 }
 
-.operatorCtrl {}
+.operatorCtrl {
+
+
+}
 
 .opSelect {
     width: 20%;
+}
+
+.buttons {
+    margin-bottom: -16px;
+    width: 700px;
+    height: 50px;
+}
+.user-part-room {
+    width: 25%;
 }

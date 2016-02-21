@@ -60,7 +60,6 @@ io.sockets.on('connection', function(socket) {
             io.sockets.emit('updateusers', room, rooms[room].users, rooms[room].ops);
             //Update topic
             socket.emit('updatetopic', room, rooms[room].topic, socket.username);
-            io.sockets.emit('servermessage', "create", room, socket.username);
             io.sockets.emit('roomlist', rooms);
         }
         fn(false, "room name taken");

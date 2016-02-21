@@ -263,33 +263,51 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         });
 
         $scope.changeTopic = function() {
-            if ($scope.topicToChange === '') {
-
-            } else {
-                socket.emit('settopic', {
-                    room: $scope.roomId,
-                    topic: $scope.topicToChange
-                });
-                $scope.topicToChange = '';
-            }
+			alertify.prompt("Topic: ",
+                function(evt, value) {
+				 	if(evt === true) {
+						if(value === undefined || value === '') {
+							alertify.error("Topic can not be empty");
+							
+						}
+				 		socket.emit('settopic', {
+							room: $scope.roomId,
+							topic: value
+						}, function(success) {
+							if(success) {
+								alertify.success('Topic has been changed');
+							} else {
+								alertify.error('Could not change topic');
+							}
+						});
+				 	} else {
+				 		
+				 	}
+                }); 
         };
 
         $scope.changePassword = function() {
-            if ($scope.pwToChange === '') {
-
-            } else {
-                socket.emit('setpassword', {
-                    room: $scope.roomId,
-                    password: $scope.pwToChange
-                }, function(success) {
-					if(success) {
-						alertify.success('Password has been changed');
-						$scope.pwToChange = '';
-					} else {
-						alertify.error('Could not change the password');
-					}
-				});
-            }
+            alertify.prompt("Password: ",
+                function(evt, value) {
+				 	if(evt === true) {
+						if(value === undefined || value === '') {
+							alertify.error("Can not change password to empty, use the remove password instead");
+							return;
+						}
+				 		socket.emit('setpassword', {
+							room: $scope.roomId,
+							password: value
+						}, function(success) {
+							if(success) {
+								alertify.success('Password has been changed');
+							} else {
+								alertify.error('Could not change password');
+							}
+						});
+				 	} else {
+				 		
+				 	}
+                }); 
         };
 
         $scope.removePassword = function() {

@@ -32,6 +32,19 @@ angular.module("ChatApp").controller("RoomsCtrl", ["$scope", "$http", "$routePar
                 });
             }
         };
+		
+		//Lets the user know if he is unbanned from a room
+		socket.on('servermessage', function(evt, room, user, target) {
+            switch(evt) {
+			case "unban":
+				if (target !== $scope.nickId) {
+					alertify.success("You have been unbanned from " + room + " by " + user);
+				}
+				break;
+			default:
+				break;
+			} 
+        });
 
         socket.on("roomlist", function(data) {
             $scope.rooms = data;

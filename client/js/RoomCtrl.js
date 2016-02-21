@@ -82,7 +82,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             }
         });
 		
-		//In the last 4 cases of the switch I exclude the target because it should get a private message
+		//In the last 4 cases of the switch I exclude the target because it should get a custom message
 		socket.on('servermessage', function(evt, room, user, target) {
             switch(evt) {
 			case "join":
@@ -101,23 +101,30 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
 				}
 				break;
 			case "op":
-				if($scope.roomId === room && user !== $scope.nickId) {
+				if($scope.roomId === room && target !== $scope.nickId) {
 					alertify.success(user + " opped " + target);
 				}
 				break;
 			case "deop":
-				if($scope.roomId === room && user !== $scope.nickId) {
+				if($scope.roomId === room && target !== $scope.nickId) {
 					alertify.success(user + " deopped " + target);
 				}
 				break;
 			case "kick":
-				if($scope.roomId === room && user !== $scope.nickId) {
+				if($scope.roomId === room && target !== $scope.nickId) {
 					alertify.success(user + " kicked " + target);
 				}
 				break;
 			case "ban":
-				if($scope.roomId === room && user !== $scope.nickId) {
+				if($scope.roomId === room && target !== $scope.nickId) {
 					alertify.success(user + " banned " + target);
+				}
+				break;
+			case "unban":
+				if($scope.roomId === room) {
+					alertify.success(user + " unbanned " + target);
+				} else if (target !== $scope.nickId) {
+					alertify.success("You have been unbanned " + room + " by " + user);
 				}
 				break;
 			default:
@@ -382,6 +389,30 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
 				}
             });
         };
+		
+		$scope.unbanUser = function() {
+			alertify.prompt("User: ",
+                function(evt, value) {
+				 	if(evt === true) {
+						if(value === undefined || value === '') {
+							alertify.error("Can not unban empty");
+							return;
+						}
+				 		socket.emit('unban', {
+							room: $scope.roomId,
+							user: value
+						}, function(success) {
+							if(success) {
+								
+							} else {
+								alertify.error('Could not unban user');
+							}
+						});
+				 	} else {
+				 		
+				 	}
+                }); 
+		};
 
         function currentTime() {
             moment.locale("is");

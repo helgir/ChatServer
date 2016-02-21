@@ -225,7 +225,6 @@ h4 {
 
 .operatorCtrl {
 
-
 }
 
 .opSelect {
@@ -246,7 +245,18 @@ h4 {
     padding-right: 0px;
 }
 
+.user-list-item-name {
+    clear: left;
+    margin-left: 0px;
+    padding-left: 0px;
+    float: left;
+}
+
 .user-list {
     padding-left: 5px;
     padding-right: 0px;
+}
+
+.userOperation {
+    margin-right: 3px;
 }

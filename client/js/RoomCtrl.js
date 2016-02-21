@@ -217,7 +217,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         socket.on('kicked', function(roomId, nickId, user) {
             if ($scope.roomId === roomId && $scope.nickId === nickId) {
                 $location.path('/rooms/' + $scope.nickId);
-                $scope.roomId = '';
                 alertify.error('You have been kicked from ' + roomId);
             }
         });
@@ -225,7 +224,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         socket.on('banned', function(roomId, nickId, user) {
             if ($scope.roomId === roomId && $scope.nickId === nickId) {
                 $location.path('/rooms/' + $scope.nickId);
-                //$scope.roomId = '';
                 alertify.error('You have been banned from ' + roomId, 0);
             }
             if ($scope.nickId === user) {
@@ -283,21 +281,26 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 socket.emit('setpassword', {
                     room: $scope.roomId,
                     password: $scope.pwToChange
-                });
-                alertify.success('Password changed to: ' + $scope.pwToChange);
-                $scope.pwToChange = '';
+                }, function(success) {
+					if(success) {
+						alertify.success('Password changed to: ' + $scope.pwToChange);
+						$scope.pwToChange = '';
+					} else {
+						alertify.error('Could not change the password');
+					}
+				});
             }
         };
 
         $scope.removePassword = function() {
-
             socket.emit('removepassword', {
                 room: $scope.roomId
             }, function(success) {
                 if (success) {
                     alertify.success('Password removed');
-
-                }
+                } else {
+					alertify.success('Could not remove the password');
+				}
             });
         };
 

@@ -82,6 +82,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             }
         });
 		
+		//In the last 4 cases of the switch I exclude the target because it should get a private message
 		socket.on('servermessage', function(evt, room, user, target) {
             switch(evt) {
 			case "create":
@@ -105,22 +106,22 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
 				}
 				break;
 			case "op":
-				if($scope.roomId === room) {
+				if($scope.roomId === room && user !== $scope.nickId) {
 					alertify.success(user + " opped " + target);
 				}
 				break;
 			case "deop":
-				if($scope.roomId === room) {
+				if($scope.roomId === room && user !== $scope.nickId) {
 					alertify.success(user + " deopped " + target);
 				}
 				break;
 			case "kick":
-				if($scope.roomId === room) {
+				if($scope.roomId === room && user !== $scope.nickId) {
 					alertify.success(user + " kicked " + target);
 				}
 				break;
 			case "ban":
-				if($scope.roomId === room) {
+				if($scope.roomId === room && user !== $scope.nickId) {
 					alertify.success(user + " banned " + target);
 				}
 				break;

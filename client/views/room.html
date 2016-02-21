@@ -1,7 +1,7 @@
 <div id="wrapper_room">
     <div id="header">
-        <h2 class="headings"> Hello {{nickId}} welcome to chat room: {{roomId}} </h2>
-        <h2 class="headings">Topic of the room is: {{topic}}</h2>
+        <h2 class="headings">{{roomId}} - Topic: {{topic}}</h2>
+        <hr>
     </div>
     <div class="buttons">
         <div ng-show="isop" class="btn-group btn-group-justified operatorCtrl">
@@ -39,6 +39,7 @@
         <div class="pmBoxTop" scroll-glue>
             <div class="pmBoxHead">
                 Send pm to : {{nickSelected}}
+                <hr>
             </div>
             <ul ng-repeat="message in pmMessages[nickSelected]">
                 <li>

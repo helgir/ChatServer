@@ -3,12 +3,16 @@
         <div class="col-md-offset-5 col-md-3">
             <div class="form-login">
                 <h4>Welcome to Angular Chat</h4>
+                <form ng-submit="login()">
                 <input type="text" id="login_box" class="form-control" ng-model="nickId" placeholder="Enter Nickname" />
+                </form>
                 </br>
                 </br>
                 <div class="wrapper" ng-hide="loggedIn">
                     <span class="group-btn">
-                    <button ng-click="login()" class="btn btn-default glyphicon glyphicon-log-in" id"login_click"> Login</button>
+                    <form ng-submit="login()">
+                    <button type="submit" class="btn btn-default glyphicon glyphicon-log-in" id"login_click"> Login</button>
+                    </form>
                     </br>
                     </br>
                     <div class="alert alert-danger" ng-show="login_error" id="errorMessage_home" >

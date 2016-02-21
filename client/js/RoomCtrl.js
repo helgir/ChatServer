@@ -123,7 +123,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
 			case "unban":
 				if($scope.roomId === room) {
 					alertify.success(user + " unbanned " + target);
-				} else if (target !== $scope.nickId) {
+				} else if (target === $scope.nickId) {
 					alertify.success("You have been unbanned " + room + " by " + user);
 				}
 				break;

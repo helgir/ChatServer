@@ -31,8 +31,21 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 });
                 alertify.prompt("Password: ",
                     function(evt, value) {
-                        sendJoinRoomRequest($scope.roomId, value);
+						if(evt === true) {
+							sendJoinRoomRequest($scope.roomId, value);
+						} else {
+							$rootScope.$apply(function() {
+								$location.path('/rooms/' + $scope.nickId);
+							});
+						}
                     });
+				//Resetting alertify defaults
+				alertify.set({
+                    labels: {
+                        ok: "Ok",
+                        cancel: "Cancel"
+                    }
+				});
             } else {
                 sendJoinRoomRequest($scope.roomId, undefined);
             }

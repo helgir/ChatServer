@@ -263,3 +263,9 @@ h4 {
 .userOperation {
     margin-right: 3px;
 }
+
+.line-in-pmbox {
+    background-color: black;
+    height: 1px;
+    border: 0;
+}

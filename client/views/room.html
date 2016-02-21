@@ -22,7 +22,7 @@
             </li>
         </ul>
     </div>
-    <div id="rightcolumn">
+    <div id="rightcolumn" class="well">
         <h2> Users </h2>
         <ul class="list-group-list list-group-horizontal user-list" id="users">
             <li class="userlist-unstyled list-unstyled user-list-item" ng-repeat="nick in nicks">
@@ -39,7 +39,7 @@
         <div class="pmBoxTop" scroll-glue>
             <div class="pmBoxHead">
                 Send pm to : {{nickSelected}}
-                <hr>
+                <hr class="line-in-pmbox">
             </div>
             <ul ng-repeat="message in pmMessages[nickSelected]">
                 <li>

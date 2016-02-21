@@ -78,9 +78,10 @@ h4 {
 }
 
 #header {
+    text-align: center;
     position: relative;
-    height: 90px;
-    width: 800px;
+    height: 70px;
+    width: 700px;
 }
 
 #content {
@@ -113,16 +114,18 @@ h4 {
     float: left;
     text-align: left;
     border: 5px solid black;
-    height: 400px;
+    height: 500px;
     text-align: center;
-    max-height: 400px;
+    max-height: 500px;
     border: 5px solid black;
     background: white;
 }
 
 .pmBoxHead {
     position: relative;
-    height: 30px;
+    height: 50px;
+    text-align: center;
+    color: rgb(12, 22, 200);
 }
 
 .pmBoxTop {
@@ -130,7 +133,7 @@ h4 {
     word-wrap: break-word;
     overflow-y: scroll;
     overflow-wrap: break-word;
-    height: 340px;
+    height: 444px;
 }
 
 .pmBoxBottom {

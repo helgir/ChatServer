@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ whoami != 'root' ]; then
+if [ "$(whoami)" != "root" ]; then
 	echo "This script needs to run as root to function properly"
 	exit 1
 fi
@@ -27,7 +27,7 @@ if [ $errorcode != 0 ]; then
     exit $errorcode
 fi
 
-(cd client && bower install);
+(cd client && bower install --allow-root);
 errorcode=$?
 if [ $errorcode != 0 ]; then
     echo "bower install exited with error code $errorcode"

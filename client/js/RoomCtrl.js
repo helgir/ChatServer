@@ -81,6 +81,53 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 }
             }
         });
+		
+		socket.on('servermessage', function(evt, room, user, target) {
+            switch(evt) {
+			case "create":
+				if($scope.roomId === room) {
+					alertify.success("Your room " + room + " was created");
+				}
+			break;
+			case "join":
+				if($scope.roomId === room) {
+					alertify.success(user + " has joined the room");
+				}
+				break;
+			case "part":
+				if($scope.roomId === room) {
+					alertify.success(user + " has left the room");
+				}
+				break;
+			case "quit":
+				if(room[$scope.roomId] !== undefined) {
+					alertify.success(user + " has left the room");
+				}
+				break;
+			case "op":
+				if($scope.roomId === room) {
+					alertify.success(user + " opped " + target);
+				}
+				break;
+			case "deop":
+				if($scope.roomId === room) {
+					alertify.success(user + " deopped " + target);
+				}
+				break;
+			case "kick":
+				if($scope.roomId === room) {
+					alertify.success(user + " kicked " + target);
+				}
+				break;
+			case "ban":
+				if($scope.roomId === room) {
+					alertify.success(user + " banned " + target);
+				}
+				break;
+			default:
+				break;
+			} 
+        });
 
         $scope.sendMSG = function() {
             if ($scope.submitMessage === '') {
@@ -144,11 +191,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         });
 
         $scope.partRoom = function() {
-            var message = 'has left the room';
-            socket.emit('sendmsg', {
-                roomName: $scope.roomId,
-                msg: message
-            });
             socket.emit('partroom', $scope.roomId);
             $location.path('/rooms/' + $scope.nickId);
         };
@@ -206,11 +248,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
 					user: user
 				}, function(success) {
 					if(success) {
-						var message = $scope.nickId + 'has opped ' + user;
-						socket.emit('sendmsg', {
-							roomName: $scope.roomId,
-							msg: message
-						});
+
 					} else {
 						alertify.error("Could not op " + user);
 					}
@@ -225,11 +263,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
 					user: user
 				}, function(success) {
 					if(success) {
-						var message = $scope.nickId + 'has deopped ' + user;
-						socket.emit('sendmsg', {
-							roomName: $scope.roomId,
-							msg: message
-						});
+
 					} else {
 						alertify.error("Could not deop " + user);
 					}
@@ -244,11 +278,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
 					user: user
 				}, function(success) {
 					if(success) {
-						var message = $scope.nickId + 'has kicked ' + user;
-						socket.emit('sendmsg', {
-							roomName: $scope.roomId,
-							msg: message
-						});
+
 					} else {
 						alertify.error("Could not kick " + user);
 					}
@@ -263,11 +293,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
 					user: user
 				}, function(success) {
 					if(success) {
-						var message = $scope.nickId + 'has banned ' + user;
-						socket.emit('sendmsg', {
-							roomName: $scope.roomId,
-							msg: message
-						});
+
 					} else {
 						alertify.error("Could not ban " + user);
 					}

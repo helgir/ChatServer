@@ -24,10 +24,10 @@
     </div>
     <div id="rightcolumn">
         <h2> Users </h2>
-        <ul class="list-group-list list-group-horizontal" id="users">
-            <li class="userlist-unstyled" ng-repeat="nick in nicks">
-                <a href="" ng-click="showPmBox(nick)">{{nick}}</a>
-                <select class="opSelect" ng-show="isop" ng-model="orderSelect" ng-options="order.value as order.label for order in orders" ng-change="selectOrders(orderSelect,nick)"> 
+        <ul class="list-group-list list-group-horizontal user-list" id="users">
+            <li class="userlist-unstyled list-unstyled user-list-item" ng-repeat="nick in nicks">
+                <a href="" ng-click="showPmBox(nick)" class="pull-left">{{nick}}</a>
+                <select class="opSelect pull-right" ng-show="isop" ng-model="orderSelect" ng-options="order.value as order.label for order in orders" ng-change="selectOrders(orderSelect,nick)"> 
                 </select>
                 <span ng-show="pmUnreadFrom[nick]" class="ng-cloak glyphicon glyphicon-envelope pull-right"></span>
             </li>

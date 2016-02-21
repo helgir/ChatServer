@@ -198,21 +198,82 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 $scope.pmUnreadFrom[nick] = false;
             }
         };
-
-        $scope.selectOrders = function(value, nick) {
-            if (value === 'kick') {
-                var message = 'has kicked ' + nick;
-
-                socket.emit('sendmsg', {
-                    roomName: $scope.roomId,
-                    msg: message
-                });
-            }
-            socket.emit(value, {
-                room: $scope.roomId,
-                user: nick
-            }, function(success) {});
-        };
+		
+		$scope.opUser = function(user) {
+			if(user !== undefined) {
+				socket.emit('op', {
+					room: $scope.roomId,
+					user: user
+				}, function(success) {
+					if(success) {
+						var message = $scope.nickId + 'has opped ' + user;
+						socket.emit('sendmsg', {
+							roomName: $scope.roomId,
+							msg: message
+						});
+					} else {
+						alertify.error("Could not op " + user);
+					}
+				});
+			}
+		};
+		
+		$scope.deopUser = function(user) {
+			if(user !== undefined) {
+				socket.emit('deop', {
+					room: $scope.roomId,
+					user: user
+				}, function(success) {
+					if(success) {
+						var message = $scope.nickId + 'has deopped ' + user;
+						socket.emit('sendmsg', {
+							roomName: $scope.roomId,
+							msg: message
+						});
+					} else {
+						alertify.error("Could not deop " + user);
+					}
+				});
+			}
+		};
+		
+		$scope.kickUser = function(user) {
+			if(user !== undefined) {
+				socket.emit('kick', {
+					room: $scope.roomId,
+					user: user
+				}, function(success) {
+					if(success) {
+						var message = $scope.nickId + 'has kicked ' + user;
+						socket.emit('sendmsg', {
+							roomName: $scope.roomId,
+							msg: message
+						});
+					} else {
+						alertify.error("Could not kick " + user);
+					}
+				});
+			}
+		};
+		
+		$scope.banUser = function(user) {
+			if(user !== undefined) {
+				socket.emit('ban', {
+					room: $scope.roomId,
+					user: user
+				}, function(success) {
+					if(success) {
+						var message = $scope.nickId + 'has banned ' + user;
+						socket.emit('sendmsg', {
+							roomName: $scope.roomId,
+							msg: message
+						});
+					} else {
+						alertify.error("Could not ban " + user);
+					}
+				});
+			}
+		};
 
         socket.on('kicked', function(roomId, nickId, user) {
             if ($scope.roomId === roomId && $scope.nickId === nickId) {
@@ -226,39 +287,17 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 $location.path('/rooms/' + $scope.nickId);
                 alertify.error('You have been banned from ' + roomId, 0);
             }
-            if ($scope.nickId === user) {
-                var message = 'has banned ' + nickId;
-
-                socket.emit('sendmsg', {
-                    roomName: $scope.roomId,
-                    msg: message
-                });
-            }
         });
 
         socket.on('opped', function(roomId, nickId, user) {
             if ($scope.roomId === roomId && $scope.nickId === nickId) {
                 alertify.success('You are now op');
             }
-            if ($scope.nickId === user) {
-                var message = 'has opped ' + nickId;
-                socket.emit('sendmsg', {
-                    roomName: $scope.roomId,
-                    msg: message
-                });
-            }
         });
 
         socket.on('deopped', function(roomId, nickId, user) {
             if ($scope.roomId === roomId && $scope.nickId === nickId) {
                 alertify.error('You have been deopped');
-            }
-            if ($scope.nickId === user) {
-                var message = 'has deopped ' + nickId;
-                socket.emit('sendmsg', {
-                    roomName: $scope.roomId,
-                    msg: message
-                });
             }
         });
 
@@ -327,19 +366,5 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             var date = moment().format('LTS');
             return date;
         }
-
-        $scope.orders = [{
-            value: 'op',
-            label: 'Give Op'
-        }, {
-            value: 'deop',
-            label: 'De Op'
-        }, {
-            value: 'kick',
-            label: 'Kick'
-        }, {
-            value: 'ban',
-            label: 'Ban'
-        }];
     }
 ]);

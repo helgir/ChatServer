@@ -283,7 +283,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                     password: $scope.pwToChange
                 }, function(success) {
 					if(success) {
-						alertify.success('Password changed to: ' + $scope.pwToChange);
+						alertify.success('Password has been changed');
 						$scope.pwToChange = '';
 					} else {
 						alertify.error('Could not change the password');

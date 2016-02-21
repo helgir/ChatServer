@@ -60,7 +60,7 @@ io.sockets.on('connection', function(socket) {
             io.sockets.emit('updateusers', room, rooms[room].users, rooms[room].ops);
             //Update topic
             socket.emit('updatetopic', room, rooms[room].topic, socket.username);
-            io.sockets.emit('servermessage', "join", room, socket.username);
+            io.sockets.emit('servermessage', "create", room, socket.username);
             io.sockets.emit('roomlist', rooms);
         }
         fn(false, "room name taken");
@@ -196,6 +196,7 @@ io.sockets.on('connection', function(socket) {
             io.sockets.emit('kicked', kickObj.room, kickObj.user, socket.username);
             //Update user list for room.
             io.sockets.emit('updateusers', kickObj.room, rooms[kickObj.room].users, rooms[kickObj.room].ops);
+			io.sockets.emit('servermessage', "kick", kickObj.room, socket.username, kickObj.user);
             fn(true);
         } else {
             fn(false); // Send back failed, debugging..
@@ -212,6 +213,7 @@ io.sockets.on('connection', function(socket) {
             io.sockets.emit('opped', opObj.room, opObj.user, socket.username);
             //Update user list for room.
             io.sockets.emit('updateusers', opObj.room, rooms[opObj.room].users, rooms[opObj.room].ops);
+			io.sockets.emit('servermessage', "op", opObj.room, socket.username, opObj.user);
             fn(true);
         } else {
             fn(false); // Send back failed, debugging..
@@ -229,6 +231,7 @@ io.sockets.on('connection', function(socket) {
             io.sockets.emit('deopped', deopObj.room, deopObj.user, socket.username);
             //Update user list for room.
             io.sockets.emit('updateusers', deopObj.room, rooms[deopObj.room].users, rooms[deopObj.room].ops);
+			io.sockets.emit('servermessage', "deop", deopObj.room, socket.username, deopObj.user);
             fn(true);
         } else {
             fn(false); // Send back failed, debugging..
@@ -245,6 +248,7 @@ io.sockets.on('connection', function(socket) {
             //Kick the user from the room.
             io.sockets.emit('banned', banObj.room, banObj.user, socket.username);
             io.sockets.emit('updateusers', banObj.room, rooms[banObj.room].users, rooms[banObj.room].ops);
+			io.sockets.emit('servermessage', "ban", banObj.room, socket.username, banObj.user);
             fn(true);
         }
         fn(false);

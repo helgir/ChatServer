@@ -22,7 +22,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         joinRoom();
 
         function joinRoom() {
-            if ($routeParams.locked == 'true') {
+            if ($routeParams.locked === 'true') {
                 alertify.set({
                     labels: {
                         ok: "Join",
@@ -233,7 +233,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             if ($scope.nickId === nick) {
                 return;
             }
-            if ($scope.nickSelected != nick) {
+            if ($scope.nickSelected !== nick) {
                 $scope.nickSelected = nick;
                 $scope.userSelected = true;
                 $scope.pmUnreadFrom[nick] = false;

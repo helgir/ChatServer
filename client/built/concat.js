@@ -1,4 +1,22 @@
-angular.module("ChatApp").controller("HomeCtrl", ["$scope", "$http", "$location", "socket", "$rootScope",
+var ChatApp = angular.module('ChatApp', ["ng", "ngRoute", 'luegg.directives']);
+;angular.module("ChatApp").config(['$routeProvider',
+    function($routeProvider) {
+    $routeProvider.when("/home/login", {
+        templateUrl: "/views/home.html",
+        controller: "HomeCtrl"
+    }).when("/rooms/:nickId", {
+        templateUrl: "/views/rooms.html",
+        controller: "RoomsCtrl",
+    }).when("/rooms/:nickId/:roomId", {
+        templateUrl: "/views/room.html",
+        controller: "RoomCtrl"
+    }).otherwise({
+        redirectTo: "home/login"
+    });
+
+}
+]);
+;angular.module("ChatApp").controller("HomeCtrl", ["$scope", "$http", "$location", "socket", "$rootScope",
     function($scope, $http, $location, socket, $rootScope) {
 
 
@@ -7,6 +25,9 @@ angular.module("ChatApp").controller("HomeCtrl", ["$scope", "$http", "$location"
         $scope.errorMessage = '';
         $scope.login_error = false;
 
+        $scope.$on('$destroy', function(event) {
+            socket.getSocket().removeAllListeners();
+        });
 
         $scope.login = function() {
             if ($scope.nickId === '') {
@@ -15,7 +36,6 @@ angular.module("ChatApp").controller("HomeCtrl", ["$scope", "$http", "$location"
                 $scope.errorMessage = 'Please enter nickname';
                 return;
             }
-
             socket.emit("adduser", $scope.nickId, function(available) {
                 if (available) {
                     $scope.loggedIn = true;
@@ -28,9 +48,8 @@ angular.module("ChatApp").controller("HomeCtrl", ["$scope", "$http", "$location"
             });
         };
     }
-]);;
-angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routeParams", "$location", "socket", "$rootScope",
-
+]);
+;angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routeParams", "$location", "socket", "$rootScope",
 
     function($scope, $http, $routeParams, $location, socket, $rootScope) {
 
@@ -63,12 +82,29 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 });
                 alertify.prompt("Password: ",
                     function(evt, value) {
-                        sendJoinRoomRequest($scope.roomId, value);
+                        if (evt === true) {
+                            sendJoinRoomRequest($scope.roomId, value);
+                        } else {
+                            $rootScope.$apply(function() {
+                                $location.path('/rooms/' + $scope.nickId);
+                            });
+                        }
                     });
+                //Resetting alertify defaults
+                alertify.set({
+                    labels: {
+                        ok: "Ok",
+                        cancel: "Cancel"
+                    }
+                });
             } else {
                 sendJoinRoomRequest($scope.roomId, undefined);
             }
         }
+
+        $scope.$on('$destroy', function(event) {
+            socket.getSocket().removeAllListeners();
+        });
 
         function sendJoinRoomRequest(roomId, password) {
             socket.emit('joinroom', {
@@ -88,7 +124,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         }
 
         socket.on('updateusers', function(roomId, nicksId, ops) {
-
             if ($scope.roomId === roomId) {
                 $scope.isop = (ops[$scope.nickId] !== undefined);
                 $scope.nicks = nicksId;
@@ -98,9 +133,57 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             }
         });
 
+        //In the last 4 cases of the switch I exclude the target because it should get a custom message
+        socket.on('servermessage', function(evt, room, user, target) {
+            switch (evt) {
+                case "join":
+                    if ($scope.roomId === room) {
+                        alertify.success(user + " has joined the room");
+                    }
+                    break;
+                case "part":
+                    if ($scope.roomId === room) {
+                        alertify.success(user + " has left the room");
+                    }
+                    break;
+                case "quit":
+                    if (room[$scope.roomId] !== undefined) {
+                        alertify.success(user + " has left the room");
+                    }
+                    break;
+                case "op":
+                    if ($scope.roomId === room && target !== $scope.nickId) {
+                        alertify.success(user + " opped " + target);
+                    }
+                    break;
+                case "deop":
+                    if ($scope.roomId === room && target !== $scope.nickId) {
+                        alertify.success(user + " deopped " + target);
+                    }
+                    break;
+                case "kick":
+                    if ($scope.roomId === room && target !== $scope.nickId) {
+                        alertify.success(user + " kicked " + target);
+                    }
+                    break;
+                case "ban":
+                    if ($scope.roomId === room && target !== $scope.nickId) {
+                        alertify.success(user + " banned " + target);
+                    }
+                    break;
+                case "unban":
+                    if ($scope.roomId === room) {
+                        alertify.success(user + " unbanned " + target);
+                    } else if (target === $scope.nickId) {
+                        alertify.success("You have been unbanned from " + room + " by " + user);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        });
 
         $scope.sendMSG = function() {
-
             if ($scope.submitMessage === '') {
                 //skip empty text
             } else {
@@ -109,9 +192,7 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                     msg: $scope.submitMessage
                 });
             }
-
             $scope.submitMessage = '';
-
         };
 
         $scope.sendPmMSG = function() {
@@ -164,18 +245,8 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         });
 
         $scope.partRoom = function() {
-
-            var message = 'has left the room';
-
-            socket.emit('sendmsg', {
-                roomName: $scope.roomId,
-                msg: message
-            });
             socket.emit('partroom', $scope.roomId);
-
             $location.path('/rooms/' + $scope.nickId);
-
-
         };
 
         socket.on('updatechat', function(roomId, msgHistory) {
@@ -209,8 +280,6 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             }
         });
 
-
-
         $scope.showPmBox = function(nick) {
             if ($scope.nickId === nick) {
                 return;
@@ -226,149 +295,184 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
             }
         };
 
-        $scope.selectOrders = function(value, nick) {
-            if (value === 'kick') {
-                var message = 'has kicked ' + nick;
+        $scope.opUser = function(user) {
+            if (user !== undefined) {
+                socket.emit('op', {
+                    room: $scope.roomId,
+                    user: user
+                }, function(success) {
+                    if (success) {
 
-                socket.emit('sendmsg', {
-                    roomName: $scope.roomId,
-                    msg: message
+                    } else {
+                        alertify.error("Could not op " + user);
+                    }
                 });
             }
-            socket.emit(value, {
-                room: $scope.roomId,
-                user: nick
-            }, function(success) {});
+        };
 
+        $scope.deopUser = function(user) {
+            if (user !== undefined) {
+                socket.emit('deop', {
+                    room: $scope.roomId,
+                    user: user
+                }, function(success) {
+                    if (success) {
+
+                    } else {
+                        alertify.error("Could not deop " + user);
+                    }
+                });
+            }
+        };
+
+        $scope.kickUser = function(user) {
+            if (user !== undefined) {
+                socket.emit('kick', {
+                    room: $scope.roomId,
+                    user: user
+                }, function(success) {
+                    if (success) {
+
+                    } else {
+                        alertify.error("Could not kick " + user);
+                    }
+                });
+            }
+        };
+
+        $scope.banUser = function(user) {
+            if (user !== undefined) {
+                socket.emit('ban', {
+                    room: $scope.roomId,
+                    user: user
+                }, function(success) {
+                    if (success) {
+
+                    } else {
+                        alertify.error("Could not ban " + user);
+                    }
+                });
+            }
         };
 
         socket.on('kicked', function(roomId, nickId, user) {
             if ($scope.roomId === roomId && $scope.nickId === nickId) {
                 $location.path('/rooms/' + $scope.nickId);
-                $scope.roomId = '';
                 alertify.error('You have been kicked from ' + roomId);
-            }
-            if ($scope.nickId === user) {
-
-
             }
         });
 
         socket.on('banned', function(roomId, nickId, user) {
             if ($scope.roomId === roomId && $scope.nickId === nickId) {
                 $location.path('/rooms/' + $scope.nickId);
-                //$scope.roomId = '';
                 alertify.error('You have been banned from ' + roomId, 0);
             }
-            if ($scope.nickId === user) {
-                var message = 'has banned ' + nickId;
-
-                socket.emit('sendmsg', {
-                    roomName: $scope.roomId,
-                    msg: message
-                });
-            }
-
-
         });
 
         socket.on('opped', function(roomId, nickId, user) {
             if ($scope.roomId === roomId && $scope.nickId === nickId) {
                 alertify.success('You are now op');
             }
-            if ($scope.nickId === user) {
-                var message = 'has opped ' + nickId;
-                socket.emit('sendmsg', {
-                    roomName: $scope.roomId,
-                    msg: message
-                });
-            }
         });
 
         socket.on('deopped', function(roomId, nickId, user) {
             if ($scope.roomId === roomId && $scope.nickId === nickId) {
                 alertify.error('You have been deopped');
-
             }
-            if ($scope.nickId === user) {
-                var message = 'has deopped ' + nickId;
-                socket.emit('sendmsg', {
-                    roomName: $scope.roomId,
-                    msg: message
-                });
-            }
-
-
         });
 
         $scope.changeTopic = function() {
+            alertify.prompt("Topic: ",
+                function(evt, value) {
+                    if (evt === true) {
+                        if (value === undefined || value === '') {
+                            alertify.error("Topic can not be empty");
 
-            if ($scope.topicToChange === '') {
+                        }
+                        socket.emit('settopic', {
+                            room: $scope.roomId,
+                            topic: value
+                        }, function(success) {
+                            if (success) {
+                                alertify.success('Topic has been changed');
+                            } else {
+                                alertify.error('Could not change topic');
+                            }
+                        });
+                    } else {
 
-            } else {
-                socket.emit('settopic', {
-                    room: $scope.roomId,
-                    topic: $scope.topicToChange
+                    }
                 });
-                $scope.topicToChange = '';
-            }
-
         };
 
         $scope.changePassword = function() {
+            alertify.prompt("Password: ",
+                function(evt, value) {
+                    if (evt === true) {
+                        if (value === undefined || value === '') {
+                            alertify.error("Can not change password to empty, use the remove password instead");
+                            return;
+                        }
+                        socket.emit('setpassword', {
+                            room: $scope.roomId,
+                            password: value
+                        }, function(success) {
+                            if (success) {
+                                alertify.success('Password has been changed');
+                            } else {
+                                alertify.error('Could not change password');
+                            }
+                        });
+                    } else {
 
-
-            if ($scope.pwToChange === '') {
-
-            } else {
-                socket.emit('setpassword', {
-                    room: $scope.roomId,
-                    password: $scope.pwToChange
+                    }
                 });
-                alertify.success('Password changed to: ' + $scope.pwToChange);
-                $scope.pwToChange = '';
-
-            }
-
-
         };
 
         $scope.removePassword = function() {
-
             socket.emit('removepassword', {
                 room: $scope.roomId
             }, function(success) {
                 if (success) {
                     alertify.success('Password removed');
-
+                } else {
+                    alertify.success('Could not remove the password');
                 }
             });
+        };
+
+        $scope.unbanUser = function() {
+            alertify.prompt("User: ",
+                function(evt, value) {
+                    if (evt === true) {
+                        if (value === undefined || value === '') {
+                            alertify.error("Can not unban empty");
+                            return;
+                        }
+                        socket.emit('unban', {
+                            room: $scope.roomId,
+                            user: value
+                        }, function(success) {
+                            if (success) {
+
+                            } else {
+                                alertify.error('Could not unban user');
+                            }
+                        });
+                    } else {
+
+                    }
+                });
         };
 
         function currentTime() {
             moment.locale("is");
             var date = moment().format('LTS');
             return date;
-        };
-
-
-
-        $scope.orders = [{
-            value: 'op',
-            label: 'Give Op'
-        }, {
-            value: 'deop',
-            label: 'De Op'
-        }, {
-            value: 'kick',
-            label: 'Kick'
-        }, {
-            value: 'ban',
-            label: 'Ban'
-        }];
+        }
     }
-]);;
-angular.module("ChatApp").controller("RoomsCtrl", ["$scope", "$http", "$routeParams", "$location", "socket", "$rootScope",
+]);
+;angular.module("ChatApp").controller("RoomsCtrl", ["$scope", "$http", "$routeParams", "$location", "socket", "$rootScope",
 
     function($scope, $http, $routeParams, $location, socket, $rootScope) {
 
@@ -378,6 +482,10 @@ angular.module("ChatApp").controller("RoomsCtrl", ["$scope", "$http", "$routePar
         $scope.rooms = [];
         $scope.errorMessage = '';
         $scope.create_error = false;
+
+        $scope.$on('$destroy', function(event) {
+            socket.getSocket().removeAllListeners();
+        });
 
         $scope.newRoom = function() {
             if ($scope.roomId === '') {
@@ -399,6 +507,19 @@ angular.module("ChatApp").controller("RoomsCtrl", ["$scope", "$http", "$routePar
             }
         };
 
+        //Lets the user know if he is unbanned from a room
+        socket.on('servermessage', function(evt, room, user, target) {
+            switch (evt) {
+                case "unban":
+                    if (target === $scope.nickId) {
+                        alertify.success("You have been unbanned from " + room + " by " + user);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        });
+
         socket.on("roomlist", function(data) {
             $scope.rooms = data;
             $scope.roomlist = [];
@@ -412,25 +533,9 @@ angular.module("ChatApp").controller("RoomsCtrl", ["$scope", "$http", "$routePar
         });
 
         socket.emit('rooms');
-
     }
-]);;
-angular.module('ChatApp', ["ng", "ngRoute", 'luegg.directives']);;
-angular.module("ChatApp").config(function($routeProvider) {
-    $routeProvider.when("/home/login", {
-        templateUrl: "/views/home.html",
-        controller: "HomeCtrl"
-    }).when("/rooms/:nickId", {
-        templateUrl: "/views/rooms.html",
-        controller: "RoomsCtrl",
-    }).when("/rooms/:nickId/:roomId", {
-        templateUrl: "/views/room.html",
-        controller: "RoomCtrl"
-    }).otherwise({
-        redirectTo: "home/login"
-    });
-
-});; // Factory to wrap around the socket functions
+]);
+;// Factory to wrap around the socket functions
 // Borrowed from Brian Ford
 // http://briantford.com/blog/angular-socket-io.html
 angular.module("ChatApp").factory('socket', ['$rootScope',

@@ -1,4 +1,5 @@
-angular.module("ChatApp").config(function($routeProvider) {
+angular.module("ChatApp").config(['$routeProvider',
+    function($routeProvider) {
     $routeProvider.when("/home/login", {
         templateUrl: "/views/home.html",
         controller: "HomeCtrl"
@@ -12,4 +13,5 @@ angular.module("ChatApp").config(function($routeProvider) {
         redirectTo: "home/login"
     });
 
-});
+}
+]);

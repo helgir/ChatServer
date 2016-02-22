@@ -39,7 +39,7 @@ module.exports = function(grunt) {
                 separator: ';'
             },
             dist: {
-                src: ['client/js/*.js'],
+                src: ['client/js/app.js', 'client/js/config.js', 'client/js/HomeCtrl.js', 'client/js/RoomCtrl.js', 'client/js/RoomsCtrl.js', 'client/js/socket-io.js'],
                 dest: 'client/built/concat.js',
             },
         },
@@ -66,7 +66,6 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
-
     grunt.registerTask('default', ['jshint']);
     grunt.loadNpmTasks("grunt-jsbeautifier");
     grunt.loadNpmTasks("grunt-contrib-concat");

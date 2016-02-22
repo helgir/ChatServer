@@ -31,21 +31,21 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 });
                 alertify.prompt("Password: ",
                     function(evt, value) {
-						if(evt === true) {
-							sendJoinRoomRequest($scope.roomId, value);
-						} else {
-							$rootScope.$apply(function() {
-								$location.path('/rooms/' + $scope.nickId);
-							});
-						}
+                        if (evt === true) {
+                            sendJoinRoomRequest($scope.roomId, value);
+                        } else {
+                            $rootScope.$apply(function() {
+                                $location.path('/rooms/' + $scope.nickId);
+                            });
+                        }
                     });
-				//Resetting alertify defaults
-				alertify.set({
+                //Resetting alertify defaults
+                alertify.set({
                     labels: {
                         ok: "Ok",
                         cancel: "Cancel"
                     }
-				});
+                });
             } else {
                 sendJoinRoomRequest($scope.roomId, undefined);
             }
@@ -81,55 +81,55 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 }
             }
         });
-		
-		//In the last 4 cases of the switch I exclude the target because it should get a custom message
-		socket.on('servermessage', function(evt, room, user, target) {
-            switch(evt) {
-			case "join":
-				if($scope.roomId === room) {
-					alertify.success(user + " has joined the room");
-				}
-				break;
-			case "part":
-				if($scope.roomId === room) {
-					alertify.success(user + " has left the room");
-				}
-				break;
-			case "quit":
-				if(room[$scope.roomId] !== undefined) {
-					alertify.success(user + " has left the room");
-				}
-				break;
-			case "op":
-				if($scope.roomId === room && target !== $scope.nickId) {
-					alertify.success(user + " opped " + target);
-				}
-				break;
-			case "deop":
-				if($scope.roomId === room && target !== $scope.nickId) {
-					alertify.success(user + " deopped " + target);
-				}
-				break;
-			case "kick":
-				if($scope.roomId === room && target !== $scope.nickId) {
-					alertify.success(user + " kicked " + target);
-				}
-				break;
-			case "ban":
-				if($scope.roomId === room && target !== $scope.nickId) {
-					alertify.success(user + " banned " + target);
-				}
-				break;
-			case "unban":
-				if($scope.roomId === room) {
-					alertify.success(user + " unbanned " + target);
-				} else if (target === $scope.nickId) {
-					alertify.success("You have been unbanned from " + room + " by " + user);
-				}
-				break;
-			default:
-				break;
-			} 
+
+        //In the last 4 cases of the switch I exclude the target because it should get a custom message
+        socket.on('servermessage', function(evt, room, user, target) {
+            switch (evt) {
+                case "join":
+                    if ($scope.roomId === room) {
+                        alertify.success(user + " has joined the room");
+                    }
+                    break;
+                case "part":
+                    if ($scope.roomId === room) {
+                        alertify.success(user + " has left the room");
+                    }
+                    break;
+                case "quit":
+                    if (room[$scope.roomId] !== undefined) {
+                        alertify.success(user + " has left the room");
+                    }
+                    break;
+                case "op":
+                    if ($scope.roomId === room && target !== $scope.nickId) {
+                        alertify.success(user + " opped " + target);
+                    }
+                    break;
+                case "deop":
+                    if ($scope.roomId === room && target !== $scope.nickId) {
+                        alertify.success(user + " deopped " + target);
+                    }
+                    break;
+                case "kick":
+                    if ($scope.roomId === room && target !== $scope.nickId) {
+                        alertify.success(user + " kicked " + target);
+                    }
+                    break;
+                case "ban":
+                    if ($scope.roomId === room && target !== $scope.nickId) {
+                        alertify.success(user + " banned " + target);
+                    }
+                    break;
+                case "unban":
+                    if ($scope.roomId === room) {
+                        alertify.success(user + " unbanned " + target);
+                    } else if (target === $scope.nickId) {
+                        alertify.success("You have been unbanned from " + room + " by " + user);
+                    }
+                    break;
+                default:
+                    break;
+            }
         });
 
         $scope.sendMSG = function() {
@@ -243,66 +243,66 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 $scope.pmUnreadFrom[nick] = false;
             }
         };
-		
-		$scope.opUser = function(user) {
-			if(user !== undefined) {
-				socket.emit('op', {
-					room: $scope.roomId,
-					user: user
-				}, function(success) {
-					if(success) {
 
-					} else {
-						alertify.error("Could not op " + user);
-					}
-				});
-			}
-		};
-		
-		$scope.deopUser = function(user) {
-			if(user !== undefined) {
-				socket.emit('deop', {
-					room: $scope.roomId,
-					user: user
-				}, function(success) {
-					if(success) {
+        $scope.opUser = function(user) {
+            if (user !== undefined) {
+                socket.emit('op', {
+                    room: $scope.roomId,
+                    user: user
+                }, function(success) {
+                    if (success) {
 
-					} else {
-						alertify.error("Could not deop " + user);
-					}
-				});
-			}
-		};
-		
-		$scope.kickUser = function(user) {
-			if(user !== undefined) {
-				socket.emit('kick', {
-					room: $scope.roomId,
-					user: user
-				}, function(success) {
-					if(success) {
+                    } else {
+                        alertify.error("Could not op " + user);
+                    }
+                });
+            }
+        };
 
-					} else {
-						alertify.error("Could not kick " + user);
-					}
-				});
-			}
-		};
-		
-		$scope.banUser = function(user) {
-			if(user !== undefined) {
-				socket.emit('ban', {
-					room: $scope.roomId,
-					user: user
-				}, function(success) {
-					if(success) {
+        $scope.deopUser = function(user) {
+            if (user !== undefined) {
+                socket.emit('deop', {
+                    room: $scope.roomId,
+                    user: user
+                }, function(success) {
+                    if (success) {
 
-					} else {
-						alertify.error("Could not ban " + user);
-					}
-				});
-			}
-		};
+                    } else {
+                        alertify.error("Could not deop " + user);
+                    }
+                });
+            }
+        };
+
+        $scope.kickUser = function(user) {
+            if (user !== undefined) {
+                socket.emit('kick', {
+                    room: $scope.roomId,
+                    user: user
+                }, function(success) {
+                    if (success) {
+
+                    } else {
+                        alertify.error("Could not kick " + user);
+                    }
+                });
+            }
+        };
+
+        $scope.banUser = function(user) {
+            if (user !== undefined) {
+                socket.emit('ban', {
+                    room: $scope.roomId,
+                    user: user
+                }, function(success) {
+                    if (success) {
+
+                    } else {
+                        alertify.error("Could not ban " + user);
+                    }
+                });
+            }
+        };
 
         socket.on('kicked', function(roomId, nickId, user) {
             if ($scope.roomId === roomId && $scope.nickId === nickId) {
@@ -331,51 +331,51 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
         });
 
         $scope.changeTopic = function() {
-			alertify.prompt("Topic: ",
+            alertify.prompt("Topic: ",
                 function(evt, value) {
-				 	if(evt === true) {
-						if(value === undefined || value === '') {
-							alertify.error("Topic can not be empty");
-							
-						}
-				 		socket.emit('settopic', {
-							room: $scope.roomId,
-							topic: value
-						}, function(success) {
-							if(success) {
-								alertify.success('Topic has been changed');
-							} else {
-								alertify.error('Could not change topic');
-							}
-						});
-				 	} else {
-				 		
-				 	}
-                }); 
+                    if (evt === true) {
+                        if (value === undefined || value === '') {
+                            alertify.error("Topic can not be empty");
+
+                        }
+                        socket.emit('settopic', {
+                            room: $scope.roomId,
+                            topic: value
+                        }, function(success) {
+                            if (success) {
+                                alertify.success('Topic has been changed');
+                            } else {
+                                alertify.error('Could not change topic');
+                            }
+                        });
+                    } else {
+
+                    }
+                });
         };
 
         $scope.changePassword = function() {
             alertify.prompt("Password: ",
                 function(evt, value) {
-				 	if(evt === true) {
-						if(value === undefined || value === '') {
-							alertify.error("Can not change password to empty, use the remove password instead");
-							return;
-						}
-				 		socket.emit('setpassword', {
-							room: $scope.roomId,
-							password: value
-						}, function(success) {
-							if(success) {
-								alertify.success('Password has been changed');
-							} else {
-								alertify.error('Could not change password');
-							}
-						});
-				 	} else {
-				 		
-				 	}
-                }); 
+                    if (evt === true) {
+                        if (value === undefined || value === '') {
+                            alertify.error("Can not change password to empty, use the remove password instead");
+                            return;
+                        }
+                        socket.emit('setpassword', {
+                            room: $scope.roomId,
+                            password: value
+                        }, function(success) {
+                            if (success) {
+                                alertify.success('Password has been changed');
+                            } else {
+                                alertify.error('Could not change password');
+                            }
+                        });
+                    } else {
+
+                    }
+                });
         };
 
         $scope.removePassword = function() {
@@ -385,34 +385,34 @@ angular.module("ChatApp").controller("RoomCtrl", ["$scope", "$http", "$routePara
                 if (success) {
                     alertify.success('Password removed');
                 } else {
-					alertify.success('Could not remove the password');
-				}
+                    alertify.success('Could not remove the password');
+                }
             });
         };
-		
-		$scope.unbanUser = function() {
-			alertify.prompt("User: ",
+
+        $scope.unbanUser = function() {
+            alertify.prompt("User: ",
                 function(evt, value) {
-				 	if(evt === true) {
-						if(value === undefined || value === '') {
-							alertify.error("Can not unban empty");
-							return;
-						}
-				 		socket.emit('unban', {
-							room: $scope.roomId,
-							user: value
-						}, function(success) {
-							if(success) {
-								
-							} else {
-								alertify.error('Could not unban user');
-							}
-						});
-				 	} else {
-				 		
-				 	}
-                }); 
-		};
+                    if (evt === true) {
+                        if (value === undefined || value === '') {
+                            alertify.error("Can not unban empty");
+                            return;
+                        }
+                        socket.emit('unban', {
+                            room: $scope.roomId,
+                            user: value
+                        }, function(success) {
+                            if (success) {
+
+                            } else {
+                                alertify.error('Could not unban user');
+                            }
+                        });
+                    } else {
+
+                    }
+                });
+        };
 
         function currentTime() {
             moment.locale("is");

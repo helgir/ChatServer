@@ -5,7 +5,7 @@ var gulp = require('gulp'),
     beautify = require('gulp-jsbeautifier');
 
 gulp.task('build', function () {
-   return gulp.src(['client/js/*.js'])
+   return gulp.src('client/js/**/*.js')
 	.pipe(jshint({ 
             curly:  true,
             immed:  true,
@@ -35,19 +35,15 @@ gulp.task('build', function () {
             ]
         }))
 	.pipe(jshint.reporter('default'))
-	.pipe(beautify({mode: 'VERIFY_AND_WRITE', logSuccess: true, indentSize: 4}))
-	.pipe(concat('all.min.js', {newLine: ';'}))
 	.pipe(uglify())
+	.pipe(concat('all.min.js'))
 	.pipe(gulp.dest('client/build'));
 });
 
-gulp.task('default', function () {
-	return gulp.src('client/js/*.js')
-	.pipe(jshint())
-	.pipe(jshint.reporter('default'))
+gulp.task('beautify', function() {
+  return gulp.src(['client/js/**/*.js'])
+    .pipe(beautify({indentSize: 4}))
+    .pipe(gulp.dest('client/js/'))
 });
 
-gulp.task('beautify', function() {
-  gulp.src(['!node_modules/**/*'], ['!server/node_modules/**/*'], ['!client/bower_components/**/*'], ['**/*.js'])
-    .pipe(beautify({indentSize: 4}))
-});
+gulp.task('default', ['beautify', 'build']);

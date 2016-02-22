@@ -46,3 +46,30 @@ already taken instead of joining the room).
 * Added if statements around methods to check if variables where undefined to avoid having the server
 look up variables in an undefined variable and crashing the server. (This change should not have changed any functionality except in cases were the server would have crashed).
 * Added servermessages for kick, op, deop and ban in addition to adding a parameter target to the servermessages to implicate which user was being kicked for example.
+
+## What we did
+### Basic:
+* User can choose a nickname
+* Active user nicks are unique
+* User can see a list of active chatrooms on arrival
+* User can join a room
+* User can leave a room
+* User can create a room
+* User can send messages inside a room
+* User can see previous messages sent in the room
+* User can see new messages when they are posted in real time
+* User can send a private message to another user
+* Creator of a room automatically becomes an operator
+* Operators can kick, ban, op and deop a user of a room
+### Basic technical
+* Each component is a single files
+* Files are concatenated and minified for production using gulp.
+* All external dependencies are installed with npm or browser
+* JSHint completes without warnings and can easily be run with "grunt jshint"
+### Additional
+* Server messages are broadcasted to users in a room
+* A user is notified when he is unbanned from a room
+* Buttons that aren't labeled have a tooltip
+* Passwords can be set and removed by operators of a room.
+* A user must provide the correct password to join a password protected room.
+* If a user receives a private message from another user the PM box will automatically open unless he is talking to another user then it will show an indication of an unread PM besides the user who sent it in the user list.

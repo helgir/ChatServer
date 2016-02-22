@@ -45,3 +45,4 @@ already taken instead of joining the room).
 * Refactored code in the room class to not use the ternary operator because JSHint didn't like it.
 * Added if statements around methods to check if variables where undefined to avoid having the server
 look up variables in an undefined variable and crashing the server. (This change should not have changed any functionality except in cases were the server would have crashed).
+* Added servermessages for kick, op, deop and ban in addition to adding a parameter target to the servermessages to implicate which user was being kicked for example.

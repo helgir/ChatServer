@@ -226,9 +226,7 @@ h4 {
     width: 15%;
 }
 
-.operatorCtrl {
-
-}
+.operatorCtrl {}
 
 .opSelect {
     width: 20%;
@@ -239,6 +237,7 @@ h4 {
     width: 700px;
     height: 50px;
 }
+
 .user-part-room {
     width: 20%;
 }
@@ -269,14 +268,15 @@ h4 {
     height: 1px;
     border: 0;
 }
+
 .atoolTip {
     display: inline;
     position: relative;
-} 
+}
 
-.atoolTip:hover:after{
+.atoolTip:hover:after {
     background: #333;
-    background: rgba(0,0,0,.8);
+    background: rgba(0, 0, 0, .8);
     border-radius: 5px;
     bottom: 26px;
     color: #fff;

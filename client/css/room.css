@@ -3,12 +3,14 @@
     height: 670px;
     margin: 0 auto;
 }
+
 #header {
     text-align: center;
     position: relative;
     height: 70px;
     width: 700px;
 }
+
 #content {
     position: relative;
     border: 5px solid black;
@@ -21,6 +23,7 @@
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
+
 #rightcolumn {
     width: 200px;
     float: left;
@@ -32,6 +35,7 @@
     overflow-y: scroll;
     background: white;
 }
+
 .pmBox {
     width: 400px;
     float: left;
@@ -43,12 +47,14 @@
     border: 5px solid black;
     background: white;
 }
+
 .pmBoxHead {
     position: relative;
     height: 50px;
     text-align: center;
     color: rgb(12, 22, 200);
 }
+
 .pmBoxTop {
     text-align: left;
     word-wrap: break-word;
@@ -56,9 +62,11 @@
     overflow-wrap: break-word;
     height: 444px;
 }
+
 .pmBoxBottom {
     height: 45px;
 }
+
 .messageBox {
     float: left;
     width: 700px;
@@ -66,9 +74,11 @@
     background: white;
     height: 44px;
 }
+
 .submitBox {
     width: 87%;
 }
+
 .submitBox_pm {
     width: 70%;
 }
@@ -76,43 +86,55 @@
 .changeTopic {
     width: 15%;
 }
-.operatorCtrl {} .opSelect {
+
+.operatorCtrl {}
+
+.opSelect {
     width: 20%;
 }
+
 .buttons {
     margin-bottom: -16px;
     width: 700px;
     height: 50px;
 }
+
 .user-part-room {
     width: 20%;
 }
+
 .user-list-item {
     padding-left: 0px;
     padding-right: 0px;
 }
+
 .user-list-item-name {
     clear: left;
     margin-left: 0px;
     padding-left: 0px;
     float: left;
 }
+
 .user-list {
     padding-left: 5px;
     padding-right: 0px;
 }
+
 .userOperation {
     margin-right: 3px;
 }
+
 .line-in-pmbox {
     background-color: black;
     height: 1px;
     border: 0;
 }
+
 .atoolTip {
     display: inline;
     position: relative;
 }
+
 .atoolTip:hover:after {
     background: #333;
     background: rgba(0, 0, 0, .8);

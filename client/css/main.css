@@ -1,9 +1,11 @@
 body {
     background-image: url("images/background.png");
 }
+
 .headings {
     color: white;
 }
+
 h4 {
     border: 0 solid #fff;
     border-bottom-width: 1px;

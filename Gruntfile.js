@@ -7,7 +7,8 @@ module.exports = function(grunt) {
                 '!node_modules/**/*.js',
                 '!server/node_modules/**/*.js',
                 '!client/bower_components/**/*.js',
-                '!client/built/**'
+                '!client/built/**',
+                '!client/build/**'
             ],
             options: {
                 curly: true,

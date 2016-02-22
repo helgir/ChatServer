@@ -40,14 +40,14 @@ module.exports = function(grunt) {
                 separator: ';'
             },
             dist: {
-                src: ['client/js/app.js', 'client/js/config.js', 'client/js/HomeCtrl.js', 'client/js/RoomCtrl.js', 'client/js/RoomsCtrl.js', 'client/js/socket-io.js'],
-                dest: 'client/built/concat.js',
+                src: ['client/js/**/*.js'],
+                dest: 'client/build/all.js',
             },
         },
         uglify: {
             dist: {
-                src: ['client/built/concat.js'],
-                dest: 'client/built/concat.min.js',
+                src: ['client/build/all.js'],
+                dest: 'client/build/all.min.js',
             },
         },
         jsbeautifier: {

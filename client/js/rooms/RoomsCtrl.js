@@ -1,16 +1,16 @@
 angular.module("ChatApp").controller("RoomsCtrl", ["$scope", "$http", "$routeParams", "$location", "socket", "$rootScope",
-    
-	function($scope, $http, $routeParams, $location, socket, $rootScope) {
+
+    function($scope, $http, $routeParams, $location, socket, $rootScope) {
         $scope.nickId = $routeParams.nickId;
         $scope.roomId = '';
         $scope.rooms = [];
         $scope.errorMessage = '';
         $scope.create_error = false;
-		
+
         $scope.$on('$destroy', function(event) {
             socket.getSocket().removeAllListeners();
         });
-		
+
         $scope.newRoom = function() {
             if ($scope.roomId === '') {
                 $scope.errorMessage = "Please enter room name";
@@ -30,7 +30,7 @@ angular.module("ChatApp").controller("RoomsCtrl", ["$scope", "$http", "$routePar
                 });
             }
         };
-		
+
         //Lets the user know if he is unbanned from a room
         socket.on('servermessage', function(evt, room, user, target) {
             switch (evt) {
@@ -43,7 +43,7 @@ angular.module("ChatApp").controller("RoomsCtrl", ["$scope", "$http", "$routePar
                     break;
             }
         });
-		
+
         socket.on("roomlist", function(data) {
             $scope.rooms = data;
             $scope.roomlist = [];
@@ -55,8 +55,8 @@ angular.module("ChatApp").controller("RoomsCtrl", ["$scope", "$http", "$routePar
                 });
             });
         });
-		
+
         socket.emit('rooms');
     }
-	
+
 ]);

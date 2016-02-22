@@ -20,6 +20,14 @@ if [ $errorcode != 0 ]; then
     exit $errorcode
 fi
 
+npm install -g gulp --python=python2.7.1
+errorcode=$?
+if [ $errorcode != 0 ]; then
+    echo "npm install -g gulp exited with error code $errorcode"
+	echo "make sure you have python 2.7.1 installed"
+    exit $errorcode
+fi
+
 npm install -g bower --python=python2.7.1
 errorcode=$?
 if [ $errorcode != 0 ]; then

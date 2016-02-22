@@ -1,7 +1,6 @@
 angular.module("ChatApp").controller("HomeCtrl", ["$scope", "$http", "$location", "socket", "$rootScope",
     function($scope, $http, $location, socket, $rootScope) {
 
-
         $scope.nickId = '';
         $scope.loggedIn = false;
         $scope.errorMessage = '';

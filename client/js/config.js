@@ -12,6 +12,5 @@ angular.module("ChatApp").config(['$routeProvider',
         }).otherwise({
             redirectTo: "home/login"
         });
-
     }
 ]);

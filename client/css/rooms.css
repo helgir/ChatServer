@@ -1,0 +1,64 @@
+.wrapper_rooms {
+    width: 1000px;
+    height: 670px;
+    margin: 0 auto;
+}
+.header_rooms {
+    position: relative;
+    width: 1000px;
+    height: 100px;
+}
+.form-login-rooms {
+    position: relative;
+    background-color: #EDEDED;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 15px;
+    border-color: #d2d2d2;
+    border-width: 5px;
+    box-shadow: 0 1px 0 #cfcfcf;
+    bottom: -30%;
+    width: 70%;
+    float: right;
+}
+.left_col {
+    position: relative;
+    height: 569px;
+    width: 400px;
+    float: left;
+    margin: 0px;
+}
+.right_col {
+    position: relative;
+    float: left;
+    height: 300px;
+    width: 400px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: left;
+    overflow-x: hidden;
+    padding: 0px;
+}
+.right_col_heading {
+    position: relative;
+}
+.rooms_list {
+    left: 0%;
+    margin: 0px;
+    padding: 0px;
+    max-height: 400px;
+}
+.rooms_item {
+    left: 0%;
+    margin: 0px;
+    padding: 0px;
+    max-height: 400px;
+}
+#errorMessage_rooms {
+    width: 100%;
+    bottom: 65%;
+    height: : 20%;
+    left: 50%;
+}

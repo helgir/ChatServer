@@ -1,0 +1,41 @@
+.form-control {
+    border-radius: 10px;
+}
+.wrapper {
+    text-align: center;
+}
+.list-group-item {
+    width: 37%;
+    left: 60%;
+}
+.list-group {} #scroll-list {
+    height: auto;
+    max-height: 400px;
+    overflow-x: hidden;
+    left: 15%;
+}
+.container {
+    padding: 25px;
+    position: fixed;
+}
+.row {
+    position: relative;
+    left: 10%;
+    top: 240px;
+}
+.row_2 {
+    position: relative;
+    left: 10%;
+    top: 0px;
+}
+.form-login {
+    background-color: #EDEDED;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 15px;
+    border-color: #d2d2d2;
+    border-width: 5px;
+    box-shadow: 0 1px 0 #cfcfcf;
+}
